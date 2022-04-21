@@ -19,16 +19,16 @@ namespace SegaSearch
 
         public MainWindow()
         {
-            InitializeComponent();
-            //fix this later once the database is properly set up
-            /*connetionString = 
-                @"Data Source=WIN-50GP30FGO75;
-                    Initial Catalog=Demodb;
-                    User ID=sa;
-                    Password=demol23";
+            InitializeComponent(); 
+            //login stuff for the database
+            connetionString = 
+                @"Data Source=WIN-mssql.cs.ksu.edu;
+                    Initial Catalog=cis560_team19;
+                    User ID=austenism;
+                    Password=joelsuxlol42069";
             
             cnn = new SqlConnection(connetionString);
-           */
+           
         }
         #region CheckBoxes CheckChanged Groups
         private void btnFranchise_CheckedChanged(object sender, EventArgs e)
