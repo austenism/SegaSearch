@@ -1,6 +1,9 @@
 import requests
 from bs4 import BeautifulSoup
 
+# makes comma separated list of values, contains year, title, genre, developer, and system
+# if a cell previously contained a comma, it is replaced with a semicolon so that the csv doesnt get ruined
+
 URL = "https://en.wikipedia.org/wiki/List_of_Sega_video_games"
 page = requests.get(URL).text
 soup = BeautifulSoup(page, 'html.parser')
@@ -15,18 +18,6 @@ info = []
 for num in range(0, 9):
     offsets.append(0)
     info.append('')
-yearoffset = 0
-titleoffset = 0
-genreoffset = 0
-developeroffset = 0
-systemsoffset = 0
-sourcesoffset = 0
-
-year = 0
-title = ""
-genre = ""
-developer = ""
-system = ""
 state = 0
 
 f = open('listofgames.csv', 'w')
@@ -40,8 +31,9 @@ for data in table.find_all(['td', 'th']):
                 for word in range(0,5):
                     info[word] = info[word].replace(',', ';')
                 try:
-                    f.write(
-                        info[0][0:-1] + ", " + info[1][0:-1] + ", " + info[2][0:-1] + ", " + info[3][0:-1] + ", " + info[4][0:-1] + "\n")
+                    if(int(info[0][0:-1]) >= 2000):
+                        f.write(
+                            info[0][0:-1] + ", " + info[1][0:-1] + ", " + info[2][0:-1] + ", " + info[3][0:-1] + ", " + info[4][0:-1] + "\n")
                 except:
                     state = state
 
