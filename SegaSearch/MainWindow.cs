@@ -15,19 +15,18 @@ namespace SegaSearch
     {
 
         string connetionString;
-        System.Data.SqlClient.SqlConnection cnn;
+        
 
         public MainWindow()
         {
             InitializeComponent(); 
             //login stuff for the database
             connetionString = 
-                @"Data Source=WIN-mssql.cs.ksu.edu;
-                    Initial Catalog=cis560_team19;
+                @"Data Source=mssql.cs.ksu.edu;
+                    Initial Catalog=austenism;
                     User ID=austenism;
                     Password=joelsuxlol42069";
-            
-            cnn = new SqlConnection(connetionString);
+            //cis560_team19
            
         }
         #region CheckBoxes CheckChanged Groups
@@ -145,6 +144,20 @@ namespace SegaSearch
                 }
             }
         }
+
         #endregion
+
+        private void btnQuery_Click(object sender, EventArgs e)
+        {
+            using (SqlConnection sqlCon = new SqlConnection(connetionString)) 
+            {
+                sqlCon.Open();
+                SqlDataAdapter sqlDa = new SqlDataAdapter("select * from Clubs.Attendee", sqlCon);
+                DataTable dtbl = new DataTable();
+                sqlDa.Fill(dtbl);
+
+                grdResults.DataSource = dtbl;
+            }
+        }
     }
 }
