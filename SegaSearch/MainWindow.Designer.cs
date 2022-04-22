@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.txtCopiesSold = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
@@ -50,6 +51,7 @@
             this.txtName = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btnQuery = new System.Windows.Forms.Button();
             this.RangeChoices = new System.Windows.Forms.GroupBox();
             this.GroupByChoices = new System.Windows.Forms.GroupBox();
             this.btnFranchise = new System.Windows.Forms.CheckBox();
@@ -72,6 +74,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.txtCopiesSold);
             this.groupBox1.Controls.Add(this.label10);
@@ -93,10 +96,19 @@
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(291, 637);
+            this.groupBox1.Size = new System.Drawing.Size(291, 682);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Add or Modify Games on the List";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(6, 643);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(108, 29);
+            this.button1.TabIndex = 19;
+            this.button1.Text = "Add/Modify";
+            this.button1.UseVisualStyleBackColor = true;
             // 
             // label1
             // 
@@ -252,21 +264,32 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.btnQuery);
             this.groupBox2.Controls.Add(this.RangeChoices);
             this.groupBox2.Controls.Add(this.GroupByChoices);
             this.groupBox2.Controls.Add(this.SortingChoices);
             this.groupBox2.Location = new System.Drawing.Point(309, 12);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(292, 640);
+            this.groupBox2.Size = new System.Drawing.Size(292, 682);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Query List of Games";
+            // 
+            // btnQuery
+            // 
+            this.btnQuery.Location = new System.Drawing.Point(6, 643);
+            this.btnQuery.Name = "btnQuery";
+            this.btnQuery.Size = new System.Drawing.Size(94, 29);
+            this.btnQuery.TabIndex = 10;
+            this.btnQuery.Text = "Query!";
+            this.btnQuery.UseVisualStyleBackColor = true;
+            this.btnQuery.Click += new System.EventHandler(this.btnQuery_Click);
             // 
             // RangeChoices
             // 
             this.RangeChoices.Location = new System.Drawing.Point(6, 371);
             this.RangeChoices.Name = "RangeChoices";
-            this.RangeChoices.Size = new System.Drawing.Size(250, 199);
+            this.RangeChoices.Size = new System.Drawing.Size(247, 224);
             this.RangeChoices.TabIndex = 9;
             this.RangeChoices.TabStop = false;
             this.RangeChoices.Text = "Ranges (MaybeImplementIDK)";
@@ -405,14 +428,14 @@
             this.grdResults.Name = "grdResults";
             this.grdResults.RowHeadersWidth = 51;
             this.grdResults.RowTemplate.Height = 29;
-            this.grdResults.Size = new System.Drawing.Size(440, 632);
+            this.grdResults.Size = new System.Drawing.Size(700, 674);
             this.grdResults.TabIndex = 2;
             // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1059, 654);
+            this.ClientSize = new System.Drawing.Size(1319, 704);
             this.Controls.Add(this.grdResults);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -468,5 +491,7 @@
         private TextBox txtGenre;
         private Label label4;
         private DataGridView grdResults;
+        private Button btnQuery;
+        private Button button1;
     }
 }
