@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.SqlServer.Types;
 
 namespace SegaSearch
 {
@@ -21,9 +22,9 @@ namespace SegaSearch
         {
             InitializeComponent(); 
             //login stuff for the database
-            connetionString = 
+            connetionString =
                 @"Data Source=mssql.cs.ksu.edu;
-                    Initial Catalog=austenism;
+                    Initial Catalog=WideWorldImporters;
                     User ID=austenism;
                     Password=joelsuxlol42069";
             //cis560_team19
@@ -152,7 +153,7 @@ namespace SegaSearch
             using (SqlConnection sqlCon = new SqlConnection(connetionString)) 
             {
                 sqlCon.Open();
-                SqlDataAdapter sqlDa = new SqlDataAdapter("select * from Clubs.Attendee", sqlCon);
+                SqlDataAdapter sqlDa = new SqlDataAdapter("select * from Sales.Customers", sqlCon);
                 DataTable dtbl = new DataTable();
                 sqlDa.Fill(dtbl);
 
