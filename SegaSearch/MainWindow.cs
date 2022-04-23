@@ -160,5 +160,33 @@ namespace SegaSearch
                 grdResults.DataSource = dtbl;
             }
         }
+
+        private void AddButton_Click(object sender, EventArgs e)
+        {
+            using (SqlConnection sqlCon = new SqlConnection(connetionString))
+            {
+                sqlCon.Open();
+                
+                SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT G.[Name], GP.ReleaseDate" +
+                    "FROM Sega.Game G" +
+                    "   INNER JOIN Sega.GamePlateform GP ON GP.GameID = G.GameID" +
+                    "WHERE G.[Name] = " + txtName + " AND YEAR(GP.ReleaseDate) = " + txtYear, sqlCon);
+                DataTable dtbl = new DataTable();
+                if(sqlDa.Fill(dtbl) >= 1)
+                {
+                    sqlDa = new SqlDataAdapter("WITH SourceCTE (GameID, FranchiseID, ReleaseDate) AS" +
+                        "(SELECT G.GameID, G.FranchiseID, GP.ReleaseDate" +
+                        "FROM Sega.Game G" +
+                        "   INNER JOIN Sega.GamePlateform GP ON GP.GameID = G.GameID" +
+                        "WHERE G.[Name] = " + txtName + " AND YEAR(GP.ReleaseDate) = " + txtYear + ")" +
+                        "UPDATE Sega.Game" + "SET    QuantitySold = " + txtCopiesSold + "FROM SourceCTE S" +
+                        "WHERE GameID = S.GameID;" +
+                        "UPDATE Sega.GamePlatform" + "SET    Rating = " + txtRating + "FROM SourceCTE S" +
+                        "WHERE GameID = S.GameID;" +
+                        "UPDATE Sega.Franchise" + "SET    [Name] = " + txtFranchise + "FROM SourceCTE S" +
+                        "WHERE FranchiseID = S.FranchiseID AND[Name] <> " + txtFranchise + ";", sqlCon);
+                }
+            }
+        }
     }
 }
