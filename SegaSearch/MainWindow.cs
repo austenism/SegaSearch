@@ -191,21 +191,66 @@ namespace SegaSearch
                 SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT G.[Name], GP.ReleaseDate" +
                     "FROM Sega.Game G" +
                     "   INNER JOIN Sega.GamePlateform GP ON GP.GameID = G.GameID" +
-                    "WHERE G.[Name] = " + txtName + " AND YEAR(GP.ReleaseDate) = " + txtYear, sqlCon);
+                    "WHERE G.[Name] = " + txtName + " AND YEAR(GP.ReleaseDate) = " + txtYear + ";", sqlCon);
                 DataTable dtbl = new DataTable();
-                if(sqlDa.Fill(dtbl) >= 1)
+                string query;
+                if(sqlDa.Fill(dtbl) > 0)
                 {
-                    sqlDa = new SqlDataAdapter("WITH SourceCTE (GameID, FranchiseID, ReleaseDate) AS" +
+
+                    query = "WITH SourceCTE (GameID, FranchiseID, ReleaseDate) AS" +
                         "(SELECT G.GameID, G.FranchiseID, GP.ReleaseDate" +
                         "FROM Sega.Game G" +
                         "   INNER JOIN Sega.GamePlateform GP ON GP.GameID = G.GameID" +
-                        "WHERE G.[Name] = " + txtName + " AND YEAR(GP.ReleaseDate) = " + txtYear + ")" +
+                        $"WHERE G.[Name] LIKE('%{txtName}%') " +
+                        "AND YEAR(GP.ReleaseDate) = " + txtYear + ")";
+
+                    if (txtCharacters.Text.Split(',') != null && txtCharacters.Text.Split(',').Count() >= 1)
+                    {
+                        foreach (string s in txtCharacters.Text.Split(','))
+                        {
+                            string cName = s.Trim();
+                            sqlDa = new SqlDataAdapter(query + "SELECT *" +
+                                "FROM Sega.GameCharacter GC" +
+                                "   INNER JOIN SourceCTE S ON S.GameID = GC.GameID" +
+                                "   INNER JOIN Sega.Character C ON C.CharacterID = GC.CharacterID" +
+                                $"WHERE C.[Name] LIKE('%{cName}%');", sqlCon);
+                            dtbl = new DataTable();
+                            if (sqlDa.Fill(dtbl) == 0)
+                            {
+                                query += $"INSERT Sega.Character([Name]) VALUES('%{cName}%');" +
+                                    "INSERT Sega.GameCharacter(GameID, CharacterID)" +
+                                    "SELECT S.GameID, C.CharacterID" +
+                                    "FROM SourceCTE S" +
+                                    $"   INNER JOIN Sega.Character C ON C.[Name] LIKE('%{cName}%')";
+                            }
+                        }
+                    }
+                    else if(txtCharacters.Text != null && !txtCharacters.Text.Trim().Equals(""))
+                    {
+                        string cName = txtCharacters.Text.Trim();
+                        sqlDa = new SqlDataAdapter(query + "SELECT *" +
+                                "FROM Sega.GameCharacter GC" +
+                                "   INNER JOIN SourceCTE S ON S.GameID = GC.GameID" +
+                                "   INNER JOIN Sega.Character C ON C.CharacterID = GC.CharacterID" +
+                                $"WHERE C.[Name] LIKE('%{cName}%');", sqlCon);
+                        dtbl = new DataTable();
+                        if (sqlDa.Fill(dtbl) == 0)
+                        {
+                            query += $"INSERT Sega.Character([Name]) VALUES('%{cName}%');" +
+                                "INSERT Sega.GameCharacter(GameID, CharacterID)" +
+                                "SELECT S.GameID, C.CharacterID" +
+                                "FROM SourceCTE S" +
+                                $"   INNER JOIN Sega.Character C ON C.[Name] LIKE('%{cName}%')";
+                        }
+                    }
+                    query += 
                         "UPDATE Sega.Game" + "SET    QuantitySold = " + txtCopiesSold + "FROM SourceCTE S" +
-                        "WHERE GameID = S.GameID;" +
+                        "WHERE GameID = S.GameID AND QuantitySold <> " + txtCopiesSold + ";" +
                         "UPDATE Sega.GamePlatform" + "SET    Rating = " + txtRating + "FROM SourceCTE S" +
-                        "WHERE GameID = S.GameID;" +
+                        "WHERE GameID = S.GameID AND RATING <> " + txtRating + ";" +
                         "UPDATE Sega.Franchise" + "SET    [Name] = " + txtFranchise + "FROM SourceCTE S" +
-                        "WHERE FranchiseID = S.FranchiseID AND[Name] <> " + txtFranchise + ";", sqlCon);
+                        $"WHERE FranchiseID = S.FranchiseID AND [Name] NOT LIKE('%{txtFranchise}%')" + ";";
+                    
                 }
             }
         }
