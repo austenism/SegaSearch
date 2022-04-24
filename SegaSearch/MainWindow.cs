@@ -24,136 +24,65 @@ namespace SegaSearch
             //login stuff for the database
             connetionString =
                 @"Data Source=mssql.cs.ksu.edu;
-                    Initial Catalog=WideWorldImporters;
+                    Initial Catalog=cis560_team19;
                     User ID=austenism;
                     Password=joelsuxlol42069";
             //cis560_team19
            
         }
-        #region CheckBoxes CheckChanged Groups
-        private void btnFranchise_CheckedChanged(object sender, EventArgs e)
-        {
-            if (btnFranchise.Checked)
-            {
-                if (btnYear.Checked)
-                    btnYear.Checked = false;
-                btnYear.Enabled = false;
-            }
-            else
-            {
-                bool allUnchecked = true;
-                foreach(CheckBox cb in GroupByChoices.Controls)
-                {
-                    if (cb.Checked)
-                        allUnchecked = false;
-                }
-                if (allUnchecked)
-                {
-                    btnYear.Enabled = true;
-                }
-            }
-        }
-
-        private void btnCharacters_CheckedChanged(object sender, EventArgs e)
-        {
-            if (btnCharacters.Checked)
-            {
-                if (btnYear.Checked)
-                    btnYear.Checked = false;
-                btnYear.Enabled = false;
-            }
-            else
-            {
-                bool allUnchecked = true;
-                foreach (CheckBox cb in GroupByChoices.Controls)
-                {
-                    if (cb.Checked)
-                        allUnchecked = false;
-                }
-                if (allUnchecked)
-                {
-                    btnYear.Enabled = true;
-                }
-            }
-        }
-
-        private void btnGenre_CheckedChanged(object sender, EventArgs e)
-        {
-            if (btnGenre.Checked)
-            {
-                if (btnYear.Checked)
-                    btnYear.Checked = false;
-                btnYear.Enabled = false;
-            }
-            else
-            {
-                bool allUnchecked = true;
-                foreach (CheckBox cb in GroupByChoices.Controls)
-                {
-                    if (cb.Checked)
-                        allUnchecked = false;
-                }
-                if (allUnchecked)
-                {
-                    btnYear.Enabled = true;
-                }
-            }
-        }
-
-        private void btnPlatform_CheckedChanged(object sender, EventArgs e)
-        {
-            if (btnPlatform.Checked)
-            {
-                if (btnYear.Checked)
-                    btnYear.Checked = false;
-                btnYear.Enabled = false;
-            }
-            else
-            {
-                bool allUnchecked = true;
-                foreach (CheckBox cb in GroupByChoices.Controls)
-                {
-                    if (cb.Checked)
-                        allUnchecked = false;
-                }
-                if (allUnchecked)
-                {
-                    btnYear.Enabled = true;
-                }
-            }
-        }
-
-        private void btnDevelopmentTeam_CheckedChanged(object sender, EventArgs e)
-        {
-            if (btnDevelopmentTeam.Checked)
-            {
-                if (btnYear.Checked)
-                    btnYear.Checked = false;
-                btnYear.Enabled = false;
-            }
-            else
-            {
-                bool allUnchecked = true;
-                foreach (CheckBox cb in GroupByChoices.Controls)
-                {
-                    if (cb.Checked)
-                        allUnchecked = false;
-                }
-                if (allUnchecked)
-                {
-                    btnYear.Enabled = true;
-                }
-            }
-        }
-
-        #endregion
+        
 
         private void btnQuery_Click(object sender, EventArgs e)
         {
+            String query;
+            String searchTerm = txtSearch.Text;
+
+            if (btnGame.Checked)
+            {
+                #region GameQuery
+                query = 
+                    "SELECT G.Name as Game, " +
+                    "F.Name as Franchise, " +
+                    "Stuff((SELECT ', ' + J.Name " +
+                        "FROM Sega.GameGenre GJ " +
+                            "join Sega.Genre J on J.GenreID = GJ.GenreID " +
+                        "WHERE GJ.GameID = G.GameID " +
+                        "FOR XML PATH('')), 1, 1, '') as Genre, " +
+                    "Stuff((SELECT ', ' + T.Name " +
+                        "FROM Sega.GameTeam GT " +
+                            "join Sega.DevelopmentTeam T on T.TeamID = GT.TeamID " +
+                        "WHERE GT.GameID = G.GameID " +
+                        "FOR XML PATH('')), 1, 1, '') as [Development Team], " +
+                    "Stuff((SELECT ', ' + P.Name, ' (' + Cast(Year(GP.ReleaseDate) as NVarChar(64)) + ')' " +
+                        "FROM Sega.GamePlatform GP " +
+                            "join Sega.Platform P on P.PlatformID = GP.PlatformID " +
+                        "WHERE GP.GameID = G.GameID " +
+                        "FOR XML PATH('')), 1, 1, '') as Platforms, " +
+                    "Sum(G.QuantitySold) as [Copies Sold] " +
+                    "FROM Sega.Game G " +
+                        "join Sega.GameTeam GT on G.GameID = GT.GameID " +
+                        "join Sega.DevelopmentTeam T on GT.TeamID = T.TeamID " +
+                        "join Sega.GameGenre GJ on GJ.GameID = G.GameID " +
+                        "join Sega.Genre J on J.GenreID = GJ.GenreID " +
+                        "join Sega.GamePlatform GP on GP.GameID = G.GameID " +
+                        "join Sega.Platform P on P.PlatformID = GP.PlatformID " +
+                        "join Sega.Franchise F on F.FranchiseID = G.FranchiseID " +
+                    $"Where J.Name Like('%{searchTerm}%') Or G.Name Like('%{searchTerm}%') Or T.Name like('%{searchTerm}%') or P.Name like('%{searchTerm}%') " +
+                    "GROUP BY G.Name, G.GameID, F.Name " +
+                    "Order By G.Name ";
+                #endregion
+            }
+            else
+            {
+                throw new Exception("wat");
+            }
+
+
+
             using (SqlConnection sqlCon = new SqlConnection(connetionString)) 
             {
                 sqlCon.Open();
-                SqlDataAdapter sqlDa = new SqlDataAdapter("select * from Sales.Customers", sqlCon);
+                SqlDataAdapter sqlDa = new SqlDataAdapter(query, sqlCon);
                 DataTable dtbl = new DataTable();
                 sqlDa.Fill(dtbl);
 
