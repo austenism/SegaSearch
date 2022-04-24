@@ -53,14 +53,20 @@
             this.grdResults = new System.Windows.Forms.DataGridView();
             this.GroupByChoices = new System.Windows.Forms.GroupBox();
             this.txtSearch = new System.Windows.Forms.TextBox();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.btnGenre = new System.Windows.Forms.RadioButton();
             this.btnGame = new System.Windows.Forms.RadioButton();
             this.RangeChoices = new System.Windows.Forms.GroupBox();
             this.btnQuery = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btnTeam = new System.Windows.Forms.RadioButton();
+            this.btnPlatform = new System.Windows.Forms.RadioButton();
+            this.btnManufacturer = new System.Windows.Forms.RadioButton();
+            this.btnFranchise = new System.Windows.Forms.RadioButton();
+            this.label11 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdResults)).BeginInit();
             this.GroupByChoices.SuspendLayout();
+            this.RangeChoices.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -267,33 +273,36 @@
             // 
             // GroupByChoices
             // 
-            this.GroupByChoices.Controls.Add(this.txtSearch);
-            this.GroupByChoices.Controls.Add(this.radioButton1);
+            this.GroupByChoices.Controls.Add(this.btnFranchise);
+            this.GroupByChoices.Controls.Add(this.btnManufacturer);
+            this.GroupByChoices.Controls.Add(this.btnPlatform);
+            this.GroupByChoices.Controls.Add(this.btnTeam);
+            this.GroupByChoices.Controls.Add(this.btnGenre);
             this.GroupByChoices.Controls.Add(this.btnGame);
             this.GroupByChoices.Location = new System.Drawing.Point(6, 26);
             this.GroupByChoices.Name = "GroupByChoices";
-            this.GroupByChoices.Size = new System.Drawing.Size(229, 276);
+            this.GroupByChoices.Size = new System.Drawing.Size(184, 204);
             this.GroupByChoices.TabIndex = 2;
             this.GroupByChoices.TabStop = false;
             this.GroupByChoices.Text = "Group By:";
             // 
             // txtSearch
             // 
-            this.txtSearch.Location = new System.Drawing.Point(6, 243);
+            this.txtSearch.Location = new System.Drawing.Point(6, 191);
             this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(217, 27);
+            this.txtSearch.Size = new System.Drawing.Size(269, 27);
             this.txtSearch.TabIndex = 11;
             // 
-            // radioButton1
+            // btnGenre
             // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(6, 56);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(117, 24);
-            this.radioButton1.TabIndex = 1;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "radioButton1";
-            this.radioButton1.UseVisualStyleBackColor = true;
+            this.btnGenre.AutoSize = true;
+            this.btnGenre.Location = new System.Drawing.Point(6, 56);
+            this.btnGenre.Name = "btnGenre";
+            this.btnGenre.Size = new System.Drawing.Size(69, 24);
+            this.btnGenre.TabIndex = 1;
+            this.btnGenre.TabStop = true;
+            this.btnGenre.Text = "Genre";
+            this.btnGenre.UseVisualStyleBackColor = true;
             // 
             // btnGame
             // 
@@ -308,12 +317,14 @@
             // 
             // RangeChoices
             // 
-            this.RangeChoices.Location = new System.Drawing.Point(6, 371);
+            this.RangeChoices.Controls.Add(this.label11);
+            this.RangeChoices.Controls.Add(this.txtSearch);
+            this.RangeChoices.Location = new System.Drawing.Point(6, 232);
             this.RangeChoices.Name = "RangeChoices";
-            this.RangeChoices.Size = new System.Drawing.Size(247, 224);
+            this.RangeChoices.Size = new System.Drawing.Size(281, 224);
             this.RangeChoices.TabIndex = 9;
             this.RangeChoices.TabStop = false;
-            this.RangeChoices.Text = "Ranges (MaybeImplementIDK)";
+            this.RangeChoices.Text = "Filters";
             // 
             // btnQuery
             // 
@@ -337,6 +348,59 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Query List of Games";
             // 
+            // btnTeam
+            // 
+            this.btnTeam.AutoSize = true;
+            this.btnTeam.Location = new System.Drawing.Point(6, 86);
+            this.btnTeam.Name = "btnTeam";
+            this.btnTeam.Size = new System.Drawing.Size(160, 24);
+            this.btnTeam.TabIndex = 12;
+            this.btnTeam.TabStop = true;
+            this.btnTeam.Text = "Development Team";
+            this.btnTeam.UseVisualStyleBackColor = true;
+            // 
+            // btnPlatform
+            // 
+            this.btnPlatform.AutoSize = true;
+            this.btnPlatform.Location = new System.Drawing.Point(6, 116);
+            this.btnPlatform.Name = "btnPlatform";
+            this.btnPlatform.Size = new System.Drawing.Size(87, 24);
+            this.btnPlatform.TabIndex = 13;
+            this.btnPlatform.TabStop = true;
+            this.btnPlatform.Text = "Platform";
+            this.btnPlatform.UseVisualStyleBackColor = true;
+            // 
+            // btnManufacturer
+            // 
+            this.btnManufacturer.AutoSize = true;
+            this.btnManufacturer.Location = new System.Drawing.Point(6, 146);
+            this.btnManufacturer.Name = "btnManufacturer";
+            this.btnManufacturer.Size = new System.Drawing.Size(118, 24);
+            this.btnManufacturer.TabIndex = 14;
+            this.btnManufacturer.TabStop = true;
+            this.btnManufacturer.Text = "Manufacturer";
+            this.btnManufacturer.UseVisualStyleBackColor = true;
+            // 
+            // btnFranchise
+            // 
+            this.btnFranchise.AutoSize = true;
+            this.btnFranchise.Location = new System.Drawing.Point(6, 176);
+            this.btnFranchise.Name = "btnFranchise";
+            this.btnFranchise.Size = new System.Drawing.Size(91, 24);
+            this.btnFranchise.TabIndex = 15;
+            this.btnFranchise.TabStop = true;
+            this.btnFranchise.Text = "Franchise";
+            this.btnFranchise.UseVisualStyleBackColor = true;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(6, 168);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(99, 20);
+            this.label11.TabIndex = 12;
+            this.label11.Text = "Search Terms:";
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -354,6 +418,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.grdResults)).EndInit();
             this.GroupByChoices.ResumeLayout(false);
             this.GroupByChoices.PerformLayout();
+            this.RangeChoices.ResumeLayout(false);
+            this.RangeChoices.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -388,7 +454,12 @@
         private GroupBox RangeChoices;
         private Button btnQuery;
         private GroupBox groupBox2;
-        private RadioButton radioButton1;
+        private RadioButton btnGenre;
         private TextBox txtSearch;
+        private RadioButton btnFranchise;
+        private RadioButton btnManufacturer;
+        private RadioButton btnPlatform;
+        private RadioButton btnTeam;
+        private Label label11;
     }
 }
