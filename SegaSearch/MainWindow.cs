@@ -25,7 +25,7 @@ namespace SegaSearch
             //login stuff for the database
             connetionString =
                 @"Data Source=mssql.cs.ksu.edu;
-                    Initial Catalog=austenism;
+                    Initial Catalog=cis560_team19;
                     User ID=austenism;
                     Password=joelsuxlol42069";
             //cis560_team19
