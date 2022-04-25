@@ -664,7 +664,7 @@ namespace SegaSearch
             {
                 MessageBox.Show("Error: see grid for details");
                 TextBox invalid = new TextBox();
-                invalid.Text = "Must input NAME and RELEASE YEAR to modify a game, otherwise fill all information to add a game, ignore Character(s)";
+                invalid.Text = "Must input NAME and RELEASE YEAR, at the least to modify a game, otherwise fill all information to add a game, ignore Character(s)";
                 invalid.ForeColor = Color.Red;
                 invalid.BackColor = Color.White;
                 grdResults.DataSource = invalid;
