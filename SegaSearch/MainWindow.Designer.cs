@@ -52,17 +52,21 @@
             this.label2 = new System.Windows.Forms.Label();
             this.grdResults = new System.Windows.Forms.DataGridView();
             this.GroupByChoices = new System.Windows.Forms.GroupBox();
-            this.txtSearch = new System.Windows.Forms.TextBox();
+            this.btnFranchise = new System.Windows.Forms.RadioButton();
+            this.btnManufacturer = new System.Windows.Forms.RadioButton();
+            this.btnPlatform = new System.Windows.Forms.RadioButton();
+            this.btnTeam = new System.Windows.Forms.RadioButton();
             this.btnGenre = new System.Windows.Forms.RadioButton();
             this.btnGame = new System.Windows.Forms.RadioButton();
+            this.txtSearch = new System.Windows.Forms.TextBox();
             this.RangeChoices = new System.Windows.Forms.GroupBox();
+            this.label11 = new System.Windows.Forms.Label();
             this.btnQuery = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.btnTeam = new System.Windows.Forms.RadioButton();
-            this.btnPlatform = new System.Windows.Forms.RadioButton();
-            this.btnManufacturer = new System.Windows.Forms.RadioButton();
-            this.btnFranchise = new System.Windows.Forms.RadioButton();
-            this.label11 = new System.Windows.Forms.Label();
+            this.txtFrom = new System.Windows.Forms.TextBox();
+            this.txtTo = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdResults)).BeginInit();
             this.GroupByChoices.SuspendLayout();
@@ -286,12 +290,49 @@
             this.GroupByChoices.TabStop = false;
             this.GroupByChoices.Text = "Group By:";
             // 
-            // txtSearch
+            // btnFranchise
             // 
-            this.txtSearch.Location = new System.Drawing.Point(6, 191);
-            this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(269, 27);
-            this.txtSearch.TabIndex = 11;
+            this.btnFranchise.AutoSize = true;
+            this.btnFranchise.Location = new System.Drawing.Point(6, 176);
+            this.btnFranchise.Name = "btnFranchise";
+            this.btnFranchise.Size = new System.Drawing.Size(91, 24);
+            this.btnFranchise.TabIndex = 15;
+            this.btnFranchise.TabStop = true;
+            this.btnFranchise.Text = "Franchise";
+            this.btnFranchise.UseVisualStyleBackColor = true;
+            // 
+            // btnManufacturer
+            // 
+            this.btnManufacturer.AutoSize = true;
+            this.btnManufacturer.Location = new System.Drawing.Point(6, 146);
+            this.btnManufacturer.Name = "btnManufacturer";
+            this.btnManufacturer.Size = new System.Drawing.Size(118, 24);
+            this.btnManufacturer.TabIndex = 14;
+            this.btnManufacturer.TabStop = true;
+            this.btnManufacturer.Text = "Manufacturer";
+            this.btnManufacturer.UseVisualStyleBackColor = true;
+            // 
+            // btnPlatform
+            // 
+            this.btnPlatform.AutoSize = true;
+            this.btnPlatform.Location = new System.Drawing.Point(6, 116);
+            this.btnPlatform.Name = "btnPlatform";
+            this.btnPlatform.Size = new System.Drawing.Size(87, 24);
+            this.btnPlatform.TabIndex = 13;
+            this.btnPlatform.TabStop = true;
+            this.btnPlatform.Text = "Platform";
+            this.btnPlatform.UseVisualStyleBackColor = true;
+            // 
+            // btnTeam
+            // 
+            this.btnTeam.AutoSize = true;
+            this.btnTeam.Location = new System.Drawing.Point(6, 86);
+            this.btnTeam.Name = "btnTeam";
+            this.btnTeam.Size = new System.Drawing.Size(160, 24);
+            this.btnTeam.TabIndex = 12;
+            this.btnTeam.TabStop = true;
+            this.btnTeam.Text = "Development Team";
+            this.btnTeam.UseVisualStyleBackColor = true;
             // 
             // btnGenre
             // 
@@ -315,16 +356,36 @@
             this.btnGame.Text = "Game";
             this.btnGame.UseVisualStyleBackColor = true;
             // 
+            // txtSearch
+            // 
+            this.txtSearch.Location = new System.Drawing.Point(6, 118);
+            this.txtSearch.Name = "txtSearch";
+            this.txtSearch.Size = new System.Drawing.Size(269, 27);
+            this.txtSearch.TabIndex = 11;
+            // 
             // RangeChoices
             // 
+            this.RangeChoices.Controls.Add(this.label13);
+            this.RangeChoices.Controls.Add(this.label12);
+            this.RangeChoices.Controls.Add(this.txtTo);
+            this.RangeChoices.Controls.Add(this.txtFrom);
             this.RangeChoices.Controls.Add(this.label11);
             this.RangeChoices.Controls.Add(this.txtSearch);
             this.RangeChoices.Location = new System.Drawing.Point(6, 232);
             this.RangeChoices.Name = "RangeChoices";
-            this.RangeChoices.Size = new System.Drawing.Size(281, 224);
+            this.RangeChoices.Size = new System.Drawing.Size(281, 155);
             this.RangeChoices.TabIndex = 9;
             this.RangeChoices.TabStop = false;
             this.RangeChoices.Text = "Filters";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(6, 95);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(99, 20);
+            this.label11.TabIndex = 12;
+            this.label11.Text = "Search Terms:";
             // 
             // btnQuery
             // 
@@ -348,58 +409,37 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Query List of Games";
             // 
-            // btnTeam
+            // txtFrom
             // 
-            this.btnTeam.AutoSize = true;
-            this.btnTeam.Location = new System.Drawing.Point(6, 86);
-            this.btnTeam.Name = "btnTeam";
-            this.btnTeam.Size = new System.Drawing.Size(160, 24);
-            this.btnTeam.TabIndex = 12;
-            this.btnTeam.TabStop = true;
-            this.btnTeam.Text = "Development Team";
-            this.btnTeam.UseVisualStyleBackColor = true;
+            this.txtFrom.Location = new System.Drawing.Point(96, 26);
+            this.txtFrom.Name = "txtFrom";
+            this.txtFrom.Size = new System.Drawing.Size(125, 27);
+            this.txtFrom.TabIndex = 13;
             // 
-            // btnPlatform
+            // txtTo
             // 
-            this.btnPlatform.AutoSize = true;
-            this.btnPlatform.Location = new System.Drawing.Point(6, 116);
-            this.btnPlatform.Name = "btnPlatform";
-            this.btnPlatform.Size = new System.Drawing.Size(87, 24);
-            this.btnPlatform.TabIndex = 13;
-            this.btnPlatform.TabStop = true;
-            this.btnPlatform.Text = "Platform";
-            this.btnPlatform.UseVisualStyleBackColor = true;
+            this.txtTo.Location = new System.Drawing.Point(96, 59);
+            this.txtTo.Name = "txtTo";
+            this.txtTo.Size = new System.Drawing.Size(125, 27);
+            this.txtTo.TabIndex = 14;
             // 
-            // btnManufacturer
+            // label12
             // 
-            this.btnManufacturer.AutoSize = true;
-            this.btnManufacturer.Location = new System.Drawing.Point(6, 146);
-            this.btnManufacturer.Name = "btnManufacturer";
-            this.btnManufacturer.Size = new System.Drawing.Size(118, 24);
-            this.btnManufacturer.TabIndex = 14;
-            this.btnManufacturer.TabStop = true;
-            this.btnManufacturer.Text = "Manufacturer";
-            this.btnManufacturer.UseVisualStyleBackColor = true;
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(6, 29);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(84, 20);
+            this.label12.TabIndex = 15;
+            this.label12.Text = "Years From:";
             // 
-            // btnFranchise
+            // label13
             // 
-            this.btnFranchise.AutoSize = true;
-            this.btnFranchise.Location = new System.Drawing.Point(6, 176);
-            this.btnFranchise.Name = "btnFranchise";
-            this.btnFranchise.Size = new System.Drawing.Size(91, 24);
-            this.btnFranchise.TabIndex = 15;
-            this.btnFranchise.TabStop = true;
-            this.btnFranchise.Text = "Franchise";
-            this.btnFranchise.UseVisualStyleBackColor = true;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(6, 168);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(99, 20);
-            this.label11.TabIndex = 12;
-            this.label11.Text = "Search Terms:";
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(6, 62);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(28, 20);
+            this.label13.TabIndex = 16;
+            this.label13.Text = "To:";
             // 
             // MainWindow
             // 
@@ -461,5 +501,9 @@
         private RadioButton btnPlatform;
         private RadioButton btnTeam;
         private Label label11;
+        private Label label13;
+        private Label label12;
+        private TextBox txtTo;
+        private TextBox txtFrom;
     }
 }

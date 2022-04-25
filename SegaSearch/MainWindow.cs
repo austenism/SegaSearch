@@ -38,6 +38,27 @@ namespace SegaSearch
         {
             String query;
             String searchTerm = txtSearch.Text;
+            int yearFrom;
+            int yearTo;
+
+            if (txtFrom.Text != "")
+            {
+                yearFrom = Int32.Parse(txtFrom.Text);
+            }
+            else
+            {
+                yearFrom = 1999;
+            }
+            if (txtTo.Text != "")
+            {
+
+                yearTo = Int32.Parse(txtTo.Text);
+            }
+            else
+            {
+                yearTo = 20000000;
+            }
+            
 
             if (btnGame.Checked)
             {
@@ -61,7 +82,7 @@ namespace SegaSearch
                             "join Sega.Platform P on P.PlatformID = GP.PlatformID " +
                         "WHERE GP.GameID = G.GameID " +
                         "FOR XML PATH('')), 1, 1, '') as 'Platforms', " +
-                    "Sum(G.QuantitySold) as [Copies Sold] " +
+                    "Sum(GP.QuantitySold) as [Copies Sold] " +
                     "FROM Sega.Game G " +
                         "join Sega.GameTeam GT on G.GameID = GT.GameID " +
                         "join Sega.DevelopmentTeam T on GT.TeamID = T.TeamID " +
@@ -70,7 +91,7 @@ namespace SegaSearch
                         "join Sega.GamePlatform GP on GP.GameID = G.GameID " +
                         "join Sega.Platform P on P.PlatformID = GP.PlatformID " +
                         "join Sega.Franchise F on F.FranchiseID = G.FranchiseID " +
-                    $"Where J.Name Like('%{searchTerm}%') Or G.Name Like('%{searchTerm}%') Or T.Name like('%{searchTerm}%') or P.Name like('%{searchTerm}%') " +
+                    $"Where (J.Name Like('%{searchTerm}%') Or G.Name Like('%{searchTerm}%') Or T.Name like('%{searchTerm}%') or P.Name like('%{searchTerm}%')) AND Year(GP.ReleaseDate) >= {yearFrom} AND Year(GP.ReleaseDate) <= {yearTo} " +
                     "GROUP BY G.Name, G.GameID, F.Name " +
                     "Order By G.Name ";
                 #endregion
@@ -79,7 +100,7 @@ namespace SegaSearch
             {
                 #region GenreQuery
                 query =
-                "select J.Name as [Genre], Avg(GP.Rating) as [Average Rating], Sum(G.QuantitySold) as [Games Sold], Count(Distinct G.Name) as [Number of Sega Games Made] " +
+                "select J.Name as [Genre], Avg(GP.Rating) as [Average Rating], Sum(GP.QuantitySold) as [Games Sold], Count(Distinct G.Name) as [Number of Sega Games Made] " +
                 "from Sega.Game G " +
                     "join Sega.GameTeam GT on G.GameID = GT.GameID " +
                     "join Sega.DevelopmentTeam T on GT.TeamID = T.TeamID " +
@@ -88,7 +109,7 @@ namespace SegaSearch
                     "join Sega.GamePlatform GP on GP.GameID = G.GameID " +
                     "join Sega.Platform P on P.PlatformID = GP.PlatformID " +
                     "join Sega.Franchise F on F.FranchiseID = G.FranchiseID " +
-                $"Where J.Name Like('%{searchTerm}%') " +
+                $"Where (J.Name Like('%{searchTerm}%')) AND Year(GP.ReleaseDate) >= {yearFrom} AND Year(GP.ReleaseDate) <= {yearTo} " +
                 "group by J.Name " +
                 "order by [Number of Sega Games Made] Desc ";
                 #endregion
@@ -97,7 +118,7 @@ namespace SegaSearch
             {
                 #region TeamQuery
                 query =
-                "select T.Name as [Development Team], Avg(GP.Rating) as [Average Rating], Sum(G.QuantitySold) as [Games Sold], Count(Distinct G.Name) as [Number of Sega Games Made] " +
+                "select T.Name as [Development Team], Avg(GP.Rating) as [Average Rating], Sum(GP.QuantitySold) as [Games Sold], Count(Distinct G.Name) as [Number of Sega Games Made] " +
                 "from Sega.Game G " +
                     "join Sega.GameTeam GT on G.GameID = GT.GameID " +
                     "join Sega.DevelopmentTeam T on GT.TeamID = T.TeamID " +
@@ -106,7 +127,7 @@ namespace SegaSearch
                     "join Sega.GamePlatform GP on GP.GameID = G.GameID " +
                     "join Sega.Platform P on P.PlatformID = GP.PlatformID " +
                     "join Sega.Franchise F on F.FranchiseID = G.FranchiseID " +
-                $"Where T.Name Like('%{searchTerm}%') " +
+                $"Where (T.Name Like('%{searchTerm}%')) AND Year(GP.ReleaseDate) >= {yearFrom} AND Year(GP.ReleaseDate) <= {yearTo} " +
                 "group by T.Name " +
                 "order by [Number of Sega Games Made] Desc ";
                 #endregion
@@ -115,7 +136,7 @@ namespace SegaSearch
             {
                 #region PlatformQuery
                 query =
-                "select P.Name as Platform, Avg(GP.Rating) as [Average Rating], Sum(G.QuantitySold) as [Games Sold], Count(Distinct G.Name) as [Number of Sega Games Made] " +
+                "select P.Name as Platform, Avg(GP.Rating) as [Average Rating], Sum(GP.QuantitySold) as [Games Sold], Count(Distinct G.Name) as [Number of Sega Games Made] " +
                 "from Sega.Game G " +
                     "join Sega.GameTeam GT on G.GameID = GT.GameID " +
                     "join Sega.DevelopmentTeam T on GT.TeamID = T.TeamID " +
@@ -124,7 +145,7 @@ namespace SegaSearch
                     "join Sega.GamePlatform GP on GP.GameID = G.GameID " +
                     "join Sega.Platform P on P.PlatformID = GP.PlatformID " +
                     "join Sega.Franchise F on F.FranchiseID = G.FranchiseID " +
-                $"Where P.Name Like('%{searchTerm}%') " +
+                $"Where (P.Name Like('%{searchTerm}%')) AND Year(GP.ReleaseDate) >= {yearFrom} AND Year(GP.ReleaseDate) <= {yearTo} " +
                 "group by P.Name " +
                 "order by [Number of Sega Games Made] Desc ";
                 #endregion
@@ -133,7 +154,7 @@ namespace SegaSearch
             {
                 #region ManufacturerQuery
                 query =
-                "select P.Manufacturer, Avg(GP.Rating) as [Average Rating], Sum(G.QuantitySold) as [Games Sold], Count(Distinct G.Name) as [Number of Sega Games Made] " +
+                "select P.Manufacturer, Avg(GP.Rating) as [Average Rating], Sum(GP.QuantitySold) as [Games Sold], Count(Distinct G.Name) as [Number of Sega Games Made] " +
                 "from Sega.Game G " +
                     "join Sega.GameTeam GT on G.GameID = GT.GameID " +
                     "join Sega.DevelopmentTeam T on GT.TeamID = T.TeamID " +
@@ -142,7 +163,7 @@ namespace SegaSearch
                     "join Sega.GamePlatform GP on GP.GameID = G.GameID " +
                     "join Sega.Platform P on P.PlatformID = GP.PlatformID " +
                     "join Sega.Franchise F on F.FranchiseID = G.FranchiseID " +
-                $"Where P.Manufacturer Like('%{searchTerm}%') " +
+                $"Where (P.Manufacturer Like('%{searchTerm}%')) AND Year(GP.ReleaseDate) >= {yearFrom} AND Year(GP.ReleaseDate) <= {yearTo} " +
                 "group by P.Manufacturer " +
                 "order by [Number of Sega Games Made] Desc ";
                 #endregion
@@ -151,7 +172,7 @@ namespace SegaSearch
             {
                 #region FranchiseQuery
                 query =
-                "select F.Name as Franchise, Avg(GP.Rating) as [Average Rating], Sum(G.QuantitySold) as [Games Sold], Count(Distinct G.Name) as [Number of Sega Games Made] " +
+                "select F.Name as Franchise, Avg(GP.Rating) as [Average Rating], Sum(GP.QuantitySold) as [Games Sold], Count(Distinct G.Name) as [Number of Sega Games Made] " +
                 "from Sega.Game G " +
                     "join Sega.GameTeam GT on G.GameID = GT.GameID " +
                     "join Sega.DevelopmentTeam T on GT.TeamID = T.TeamID " +
@@ -160,7 +181,7 @@ namespace SegaSearch
                     "join Sega.GamePlatform GP on GP.GameID = G.GameID " +
                     "join Sega.Platform P on P.PlatformID = GP.PlatformID " +
                     "join Sega.Franchise F on F.FranchiseID = G.FranchiseID " +
-                $"Where F.Name Like('%{searchTerm}%') " +
+                $"Where (F.Name Like('%{searchTerm}%')) AND Year(GP.ReleaseDate) >= {yearFrom} AND Year(GP.ReleaseDate) <= {yearTo} " +
                 "group by F.Name " +
                 "order by [Number of Sega Games Made] Desc ";
                 #endregion
