@@ -679,5 +679,50 @@ namespace SegaSearch
             }
             #endregion
         }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            String query;
+
+            String name = txtName.Text;
+
+            query = "delete " +
+                    "from Sega.GamePlatform " +
+                    "where GameId in " +
+                    "( " +
+                        "select G.GameID " +
+                        "from  Sega.Game G " +
+                        $"where G.Name = '{name}' " +
+                    ") " +
+                    "delete " +
+                    "from Sega.GameGenre " +
+                    "where GameId in " +
+                    "( " +
+                        "select G.GameID " +
+                        "from  Sega.Game G " +
+                        $"where G.Name = '{name}' " +
+                    ") " +
+                    "delete " +
+                    "from Sega.GameTeam " +
+                    "where GameId in " +
+                    "( " +
+                        "select G.GameID " +
+                        "from  Sega.Game G " +
+                        $"where G.Name = '{name}' " +
+                    ") " +
+
+                    "delete from Sega.Game " +
+                    $"where Name = '{name}' ";
+
+
+            using (SqlConnection sqlCon = new SqlConnection(connetionString))
+            {
+                sqlCon.Open();
+                SqlDataAdapter sqlDa = new SqlDataAdapter(query, sqlCon);
+                DataTable dtbl = new DataTable();
+                sqlDa.Fill(dtbl);
+                MessageBox.Show("Deleted");
+            }
+        }
     }
 }
