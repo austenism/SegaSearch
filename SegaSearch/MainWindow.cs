@@ -230,7 +230,7 @@ namespace SegaSearch
                             "AND YEAR(GP.ReleaseDate) = " + txtYear.Text + ")";
                         qBuild = query;
                         #region GenreAdd/ModifyQuery
-                        if (txtGenre.Text.Split(',') != null && txtGenre.Text.Split(',').Count() >= 1)
+                        if (txtGenre.Text.Split(',') != null)
                         {
                             foreach (string s in txtGenre.Text.Split(','))
                             {
@@ -265,7 +265,7 @@ namespace SegaSearch
                                 }
                             }
                         }
-                        else if (txtGenre.Text != null && !txtGenre.Text.Trim().Equals(""))
+                        else if (txtGenre.Text != "")
                         {
                             string gName = txtGenre.Text.Trim();
                             sqlDa = new SqlDataAdapter(query + "SELECT *" +
@@ -299,7 +299,7 @@ namespace SegaSearch
                         }
                         #endregion
                         #region PlatformAdd/ModifyQuery
-                        if ((txtPlatform.Text.Split(',') != null && txtPlatform.Text.Split(',').Count() >= 1))
+                        if (txtPlatform.Text.Split(',') != null)
                         {
                             foreach (string s in txtPlatform.Text.Split(','))
                             {
@@ -334,7 +334,7 @@ namespace SegaSearch
                                 }
                             }
                         }
-                        else if ((txtPlatform.Text != null && !txtPlatform.Text.Trim().Equals("")))
+                        else if (txtPlatform.Text != "")
                         {
                             string pName = txtPlatform.Text.Trim();
                             sqlDa = new SqlDataAdapter(query + "SELECT *" +
@@ -368,7 +368,7 @@ namespace SegaSearch
                         }
                         #endregion
                         #region DevTeamAdd/ModifyQuery
-                        if (txtDevelopmentTeam.Text.Split(',') != null && txtDevelopmentTeam.Text.Split(',').Count() >= 1)
+                        if (txtDevelopmentTeam.Text.Split(',') != null)
                         {
                             foreach (string s in txtDevelopmentTeam.Text.Split(','))
                             {
@@ -403,7 +403,7 @@ namespace SegaSearch
                                 }
                             }
                         }
-                        else if (txtDevelopmentTeam.Text != null && !txtDevelopmentTeam.Text.Trim().Equals(""))
+                        else if (txtDevelopmentTeam.Text != "")
                         {
                             string dName = txtDevelopmentTeam.Text.Trim();
                             sqlDa = new SqlDataAdapter(query + "SELECT *" +
@@ -436,17 +436,17 @@ namespace SegaSearch
                             }
                         }
                         #endregion
-                        if ((txtCopiesSold.Text != null && !txtCopiesSold.Text.Trim().Equals("")))
+                        if (txtCopiesSold.Text != "")
                         {
                             qBuild += "UPDATE Sega.GamePlatform" + "SET    QuantitySold = " + txtCopiesSold.Text + "FROM SourceCTE S" +
                                 "WHERE GameID = S.GameID AND PlatformID = S.PlatformID;";
                         }
-                        if (txtRating.Text != null && !txtRating.Text.Trim().Equals(""))
+                        if (txtRating.Text != "")
                         {
                             qBuild += "UPDATE Sega.GamePlatform" + "SET    Rating = " + txtRating.Text + "FROM SourceCTE S" +
                             "WHERE GameID = S.GameID AND PlatformID = S.PlatformID;";
                         }
-                        if (txtFranchise.Text != null && !txtFranchise.Text.Trim().Equals(""))
+                        if (txtFranchise.Text != "")
                         {
                             qBuild += "UPDATE Sega.Franchise" + $"SET    [Name] = N'%{txtFranchise.Text}%' FROM SourceCTE S" +
                             $"WHERE FranchiseID = S.FranchiseID AND [Name] NOT LIKE(N'%{txtFranchise.Text}%')" + ";";
@@ -469,9 +469,9 @@ namespace SegaSearch
                     else
                     {
                         //Check for input in all boxes, since adding a new game
-                        if ((txtRating.Text != null && !txtRating.Text.Trim().Equals("")) && (txtCopiesSold.Text != null && !txtCopiesSold.Text.Trim().Equals(""))
-                            && (txtFranchise.Text != null && !txtFranchise.Text.Trim().Equals("")) && (txtGenre.Text != null && !txtGenre.Text.Trim().Equals(""))
-                            && (txtPlatform.Text != null && !txtPlatform.Text.Trim().Equals("")) && (txtDevelopmentTeam.Text != null && !txtDevelopmentTeam.Text.Trim().Equals("")))
+                        if ((txtRating.Text != "") && (txtCopiesSold.Text != "")
+                            && (txtFranchise.Text != "") && (txtGenre.Text != "")
+                            && (txtPlatform.Text != "") && (txtDevelopmentTeam.Text !=""))
                         {
                             query = "WITH CheckFranchise(FranchiseID, [Name]) AS" +
                                 $"(SELECT F.FranchiseID, F.[Name]    FROM Sega.Franchise F   WHERE F.[Name] LIKE(N'%{txtFranchise.Text}%'))";
@@ -498,7 +498,7 @@ namespace SegaSearch
                             }
                             //adding to gamePlatform
                             #region AddGamePlatform
-                            if (txtPlatform.Text.Split(',') != null && txtPlatform.Text.Split(',').Count() >= 1)
+                            if (txtPlatform.Text.Split(',') != null)
                             {
                                 foreach (string s in txtPlatform.Text.Split(','))
                                 {
@@ -548,7 +548,7 @@ namespace SegaSearch
                             #endregion
                             //Add to GameGenre
                             #region AddGameGenre
-                            if (txtGenre.Text.Split(',') != null && txtGenre.Text.Split(',').Count() >= 1)
+                            if (txtGenre.Text.Split(',') != null)
                             {
                                 foreach (string s in txtGenre.Text.Split(','))
                                 {
@@ -598,7 +598,7 @@ namespace SegaSearch
                             #endregion
                             //Add to GameTeam
                             #region AddGameTeam
-                            if (txtDevelopmentTeam.Text.Split(',') != null && txtDevelopmentTeam.Text.Split(',').Count() >= 1)
+                            if (txtDevelopmentTeam.Text.Split(',') != null)
                             {
                                 foreach (string s in txtDevelopmentTeam.Text.Split(','))
                                 {
