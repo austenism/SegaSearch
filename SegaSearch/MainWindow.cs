@@ -25,12 +25,12 @@ namespace SegaSearch
             //login stuff for the database
             connetionString =
                 @"Data Source=mssql.cs.ksu.edu;
-                    Initial Catalog=cis560_team19;
+                    Initial Catalog=austenism;
                     User ID=austenism;
                     Password=joelsuxlol42069";
             //cis560_team19
-            txtCharacters.Enabled = false;
-            txtCharacters.Text = "Update to new version to add characters...";
+            //txtCharacters.Enabled = false;
+            //txtCharacters.Text = "Update to new version to add characters...";
         }
 
 
