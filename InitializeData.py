@@ -1,8 +1,7 @@
-import string
-
 import requests
 from bs4 import BeautifulSoup
 import pyodbc
+import GetRatingsAndNumberSold as GRN
 
 
 def checkwikiforseries(url):
@@ -32,8 +31,8 @@ def checkwikiforseries(url):
     return '-1'
 
 
-username = "" #YOUR USERNAME
-password = "" #YOUR PASSWORD
+username = '' #YOUR USERNAME
+password = '' #YOUR PASSWORD
 
 connection = pyodbc.connect(
     'DRIVER={ODBC Driver 17 for SQL Server};SERVER=mssql.cs.ksu.edu;DATABASE=cis560_team19;UID=' + username + ';PWD=' + password)
@@ -64,7 +63,10 @@ f = open('listofgames.csv', 'w')
 
 
 def sqlwrite(rowinfo):
+    if int(rowinfo[0]) < 2007:
+        return
     # year, title, genre(s), team(s), platform, franchise
+    print('Adding ' + rowinfo[1].replace(';', ', ') + ' (' + rowinfo[0] + ', ' + rowinfo[4] + ')')
     curgenrelist = {}
     curteamlist = {}
 
@@ -105,12 +107,41 @@ def sqlwrite(rowinfo):
     cur.execute("select GameID from Sega.Game where Name = N'" + rowinfo[1].replace(';', ', ').replace("'", "''") + "'")
     GameID = str(cur.fetchone()).replace(', )', '').replace('(', '')
 
-    cur.execute("insert Sega.GamePlatform (GameID, PlatformID, ReleaseDate) values (" + GameID + ", " + PlatformID + ", '" + rowinfo[0] + "')") # THIS NEEDS RATING AT SOME POINT
+    NumSold = GRN.GetNumSold(rowinfo[1].replace(';', ', '), rowinfo[4])
+    Rating = GRN.GetRating(rowinfo[1].replace(';', ', '), rowinfo[4])
+
+    if NumSold > 1000 and Rating > 0:
+        try:
+            cur.execute("insert Sega.GamePlatform (GameID, PlatformID, ReleaseDate, QuantitySold, Rating) values (" + GameID + ", " + PlatformID + ", '" + rowinfo[0] + "', " + str(NumSold) + ", " + str(Rating) + ')')
+        except:
+            temp1 = 'nope'
+    elif NumSold > 1000 and not Rating > 0:
+        try:
+            cur.execute(
+                "insert Sega.GamePlatform (GameID, PlatformID, ReleaseDate, QuantitySold) values (" + GameID + ", " + PlatformID + ", '" + rowinfo[0] + "', " + str(NumSold) + ")")
+        except:
+            temp1 = 'nope'
+    elif Rating > 0 and not NumSold > 1000:
+        try:
+            cur.execute("insert Sega.GamePlatform (GameID, PlatformID, ReleaseDate, Rating) values (" + GameID + ", " + PlatformID + ", '" + rowinfo[0] + "', " + str(Rating) + ")")
+        except:
+            temp1 = 'nope'
+    else:
+        try:
+            cur.execute("insert Sega.GamePlatform (GameID, PlatformID, ReleaseDate) values (" + GameID + ", " + PlatformID + ", '" + rowinfo[0] + "')")
+        except:
+            temp1 = 'nope'
 
     for GenreID in curgenrelist:
-        cur.execute("insert Sega.GameGenre(GameID, GenreID) values(" + GameID + ", " + curgenrelist[GenreID] + ")")
+        try:
+            cur.execute("insert Sega.GameGenre(GameID, GenreID) values(" + GameID + ", " + curgenrelist[GenreID] + ")")
+        except:
+            continue
     for TeamID in curteamlist:
-        cur.execute("insert Sega.GameTeam(GameID, TeamID) values(" + GameID + ", " + curteamlist[TeamID] + ")")
+        try:
+            cur.execute("insert Sega.GameTeam(GameID, TeamID) values(" + GameID + ", " + curteamlist[TeamID] + ")")
+        except:
+            continue
 
     cur.commit()
     return
