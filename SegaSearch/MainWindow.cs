@@ -29,8 +29,6 @@ namespace SegaSearch
                     User ID=austenism;
                     Password=joelsuxlol42069";
             //cis560_team19
-            txtCharacters.Enabled = false;
-            txtCharacters.Text = "Update to new version to add characters...";
         }
 
 
@@ -38,6 +36,27 @@ namespace SegaSearch
         {
             String query;
             String searchTerm = txtSearch.Text;
+            int yearFrom;
+            int yearTo;
+
+            if (txtFrom.Text != "")
+            {
+                yearFrom = Int32.Parse(txtFrom.Text);
+            }
+            else
+            {
+                yearFrom = 1999;
+            }
+            if (txtTo.Text != "")
+            {
+
+                yearTo = Int32.Parse(txtTo.Text);
+            }
+            else
+            {
+                yearTo = 20000000;
+            }
+            
 
             if (btnGame.Checked)
             {
@@ -61,7 +80,7 @@ namespace SegaSearch
                             "join Sega.Platform P on P.PlatformID = GP.PlatformID " +
                         "WHERE GP.GameID = G.GameID " +
                         "FOR XML PATH('')), 1, 1, '') as 'Platforms', " +
-                    "Sum(G.QuantitySold) as [Copies Sold] " +
+                    "Sum(GP.QuantitySold) as [Copies Sold] " +
                     "FROM Sega.Game G " +
                         "join Sega.GameTeam GT on G.GameID = GT.GameID " +
                         "join Sega.DevelopmentTeam T on GT.TeamID = T.TeamID " +
@@ -70,7 +89,7 @@ namespace SegaSearch
                         "join Sega.GamePlatform GP on GP.GameID = G.GameID " +
                         "join Sega.Platform P on P.PlatformID = GP.PlatformID " +
                         "join Sega.Franchise F on F.FranchiseID = G.FranchiseID " +
-                    $"Where J.Name Like('%{searchTerm}%') Or G.Name Like('%{searchTerm}%') Or T.Name like('%{searchTerm}%') or P.Name like('%{searchTerm}%') " +
+                    $"Where (J.Name Like('%{searchTerm}%') Or G.Name Like('%{searchTerm}%') Or T.Name like('%{searchTerm}%') or P.Name like('%{searchTerm}%')) AND Year(GP.ReleaseDate) >= {yearFrom} AND Year(GP.ReleaseDate) <= {yearTo} " +
                     "GROUP BY G.Name, G.GameID, F.Name " +
                     "Order By G.Name ";
                 #endregion
@@ -79,7 +98,7 @@ namespace SegaSearch
             {
                 #region GenreQuery
                 query =
-                "select J.Name as [Genre], Avg(GP.Rating) as [Average Rating], Sum(G.QuantitySold) as [Games Sold], Count(Distinct G.Name) as [Number of Sega Games Made] " +
+                "select J.Name as [Genre], Avg(GP.Rating) as [Average Rating], Sum(GP.QuantitySold) as [Games Sold], Count(Distinct G.Name) as [Number of Sega Games Made] " +
                 "from Sega.Game G " +
                     "join Sega.GameTeam GT on G.GameID = GT.GameID " +
                     "join Sega.DevelopmentTeam T on GT.TeamID = T.TeamID " +
@@ -88,7 +107,7 @@ namespace SegaSearch
                     "join Sega.GamePlatform GP on GP.GameID = G.GameID " +
                     "join Sega.Platform P on P.PlatformID = GP.PlatformID " +
                     "join Sega.Franchise F on F.FranchiseID = G.FranchiseID " +
-                $"Where J.Name Like('%{searchTerm}%') " +
+                $"Where (J.Name Like('%{searchTerm}%')) AND Year(GP.ReleaseDate) >= {yearFrom} AND Year(GP.ReleaseDate) <= {yearTo} " +
                 "group by J.Name " +
                 "order by [Number of Sega Games Made] Desc ";
                 #endregion
@@ -97,7 +116,7 @@ namespace SegaSearch
             {
                 #region TeamQuery
                 query =
-                "select T.Name as [Development Team], Avg(GP.Rating) as [Average Rating], Sum(G.QuantitySold) as [Games Sold], Count(Distinct G.Name) as [Number of Sega Games Made] " +
+                "select T.Name as [Development Team], Avg(GP.Rating) as [Average Rating], Sum(GP.QuantitySold) as [Games Sold], Count(Distinct G.Name) as [Number of Sega Games Made] " +
                 "from Sega.Game G " +
                     "join Sega.GameTeam GT on G.GameID = GT.GameID " +
                     "join Sega.DevelopmentTeam T on GT.TeamID = T.TeamID " +
@@ -106,7 +125,7 @@ namespace SegaSearch
                     "join Sega.GamePlatform GP on GP.GameID = G.GameID " +
                     "join Sega.Platform P on P.PlatformID = GP.PlatformID " +
                     "join Sega.Franchise F on F.FranchiseID = G.FranchiseID " +
-                $"Where T.Name Like('%{searchTerm}%') " +
+                $"Where (T.Name Like('%{searchTerm}%')) AND Year(GP.ReleaseDate) >= {yearFrom} AND Year(GP.ReleaseDate) <= {yearTo} " +
                 "group by T.Name " +
                 "order by [Number of Sega Games Made] Desc ";
                 #endregion
@@ -115,7 +134,7 @@ namespace SegaSearch
             {
                 #region PlatformQuery
                 query =
-                "select P.Name as Platform, Avg(GP.Rating) as [Average Rating], Sum(G.QuantitySold) as [Games Sold], Count(Distinct G.Name) as [Number of Sega Games Made] " +
+                "select P.Name as Platform, Avg(GP.Rating) as [Average Rating], Sum(GP.QuantitySold) as [Games Sold], Count(Distinct G.Name) as [Number of Sega Games Made] " +
                 "from Sega.Game G " +
                     "join Sega.GameTeam GT on G.GameID = GT.GameID " +
                     "join Sega.DevelopmentTeam T on GT.TeamID = T.TeamID " +
@@ -124,7 +143,7 @@ namespace SegaSearch
                     "join Sega.GamePlatform GP on GP.GameID = G.GameID " +
                     "join Sega.Platform P on P.PlatformID = GP.PlatformID " +
                     "join Sega.Franchise F on F.FranchiseID = G.FranchiseID " +
-                $"Where P.Name Like('%{searchTerm}%') " +
+                $"Where (P.Name Like('%{searchTerm}%')) AND Year(GP.ReleaseDate) >= {yearFrom} AND Year(GP.ReleaseDate) <= {yearTo} " +
                 "group by P.Name " +
                 "order by [Number of Sega Games Made] Desc ";
                 #endregion
@@ -133,7 +152,7 @@ namespace SegaSearch
             {
                 #region ManufacturerQuery
                 query =
-                "select P.Manufacturer, Avg(GP.Rating) as [Average Rating], Sum(G.QuantitySold) as [Games Sold], Count(Distinct G.Name) as [Number of Sega Games Made] " +
+                "select P.Manufacturer, Avg(GP.Rating) as [Average Rating], Sum(GP.QuantitySold) as [Games Sold], Count(Distinct G.Name) as [Number of Sega Games Made] " +
                 "from Sega.Game G " +
                     "join Sega.GameTeam GT on G.GameID = GT.GameID " +
                     "join Sega.DevelopmentTeam T on GT.TeamID = T.TeamID " +
@@ -142,7 +161,7 @@ namespace SegaSearch
                     "join Sega.GamePlatform GP on GP.GameID = G.GameID " +
                     "join Sega.Platform P on P.PlatformID = GP.PlatformID " +
                     "join Sega.Franchise F on F.FranchiseID = G.FranchiseID " +
-                $"Where P.Manufacturer Like('%{searchTerm}%') " +
+                $"Where (P.Manufacturer Like('%{searchTerm}%')) AND Year(GP.ReleaseDate) >= {yearFrom} AND Year(GP.ReleaseDate) <= {yearTo} " +
                 "group by P.Manufacturer " +
                 "order by [Number of Sega Games Made] Desc ";
                 #endregion
@@ -151,7 +170,7 @@ namespace SegaSearch
             {
                 #region FranchiseQuery
                 query =
-                "select F.Name as Franchise, Avg(GP.Rating) as [Average Rating], Sum(G.QuantitySold) as [Games Sold], Count(Distinct G.Name) as [Number of Sega Games Made] " +
+                "select F.Name as Franchise, Avg(GP.Rating) as [Average Rating], Sum(GP.QuantitySold) as [Games Sold], Count(Distinct G.Name) as [Number of Sega Games Made] " +
                 "from Sega.Game G " +
                     "join Sega.GameTeam GT on G.GameID = GT.GameID " +
                     "join Sega.DevelopmentTeam T on GT.TeamID = T.TeamID " +
@@ -160,7 +179,7 @@ namespace SegaSearch
                     "join Sega.GamePlatform GP on GP.GameID = G.GameID " +
                     "join Sega.Platform P on P.PlatformID = GP.PlatformID " +
                     "join Sega.Franchise F on F.FranchiseID = G.FranchiseID " +
-                $"Where F.Name Like('%{searchTerm}%') " +
+                $"Where (F.Name Like('%{searchTerm}%')) AND Year(GP.ReleaseDate) >= {yearFrom} AND Year(GP.ReleaseDate) <= {yearTo} " +
                 "group by F.Name " +
                 "order by [Number of Sega Games Made] Desc ";
                 #endregion
@@ -185,7 +204,7 @@ namespace SegaSearch
 
         private void AddButton_Click(object sender, EventArgs e)
         {
-            if ((txtName.Text != null && txtName.Text.Trim().Equals("")) && (txtYear.Text != null && txtYear.Text.Trim().Equals("")))
+            if ((txtName.Text != "") && (txtYear.Text != ""))
             {
                 using (SqlConnection sqlCon = new SqlConnection(connetionString))
                 {
@@ -203,15 +222,15 @@ namespace SegaSearch
                     if (sqlDa.Fill(dtbl) > 0)
                     {
 
-                        query = "WITH SourceCTE (GameID, FranchiseID, ReleaseDate) AS" +
-                            "(SELECT G.GameID, G.FranchiseID, GP.ReleaseDate" +
+                        query = "WITH SourceCTE (GameID, FranchiseID, ReleaseDate, PlatformID) AS" +
+                            "(SELECT G.GameID, G.FranchiseID, GP.ReleaseDate, GP.PlatformID" +
                             "FROM Sega.Game G" +
-                            "   INNER JOIN Sega.GamePlateform GP ON GP.GameID = G.GameID" +
+                            "   INNER JOIN Sega.GamePlatform GP ON GP.GameID = G.GameID" +
                             $"WHERE G.[Name] LIKE(N'%{txtName.Text}%') " +
                             "AND YEAR(GP.ReleaseDate) = " + txtYear.Text + ")";
                         qBuild = query;
                         #region GenreAdd/ModifyQuery
-                        if (txtGenre.Text.Split(',') != null && txtGenre.Text.Split(',').Count() >= 1)
+                        if (txtGenre.Text.Split(',') != null)
                         {
                             foreach (string s in txtGenre.Text.Split(','))
                             {
@@ -246,7 +265,7 @@ namespace SegaSearch
                                 }
                             }
                         }
-                        else if (txtGenre.Text != null && !txtGenre.Text.Trim().Equals(""))
+                        else if (txtGenre.Text != "")
                         {
                             string gName = txtGenre.Text.Trim();
                             sqlDa = new SqlDataAdapter(query + "SELECT *" +
@@ -280,7 +299,7 @@ namespace SegaSearch
                         }
                         #endregion
                         #region PlatformAdd/ModifyQuery
-                        if ((txtPlatform.Text.Split(',') != null && txtPlatform.Text.Split(',').Count() >= 1) && (txtRating.Text != null && !txtRating.Text.Trim().Equals("")))
+                        if (txtPlatform.Text.Split(',') != null)
                         {
                             foreach (string s in txtPlatform.Text.Split(','))
                             {
@@ -300,21 +319,22 @@ namespace SegaSearch
                                     if (sqlDa.Fill(dtbl) == 0)
                                     {
                                         qBuild += $"INSERT Sega.Platform([Name], Manufacturer) VALUES(N'%{pName}%', N'Unknown(user input)');" +
-                                            "INSERT Sega.GamePlatform(GameID, PlatformID, ReleaseDate, Rating)" +
-                                            "SELECT S.GameID, P.PlatformID, dateadd(YEAR, (" + txtYear.Text + " - YEAR(SYSDATETIMEOFFSET())), SYSDATETIMEOFFSET()), " + txtRating.Text +
+                                            "INSERT Sega.GamePlatform(GameID, PlatformID, ReleaseDate)" +
+                                            "SELECT S.GameID, P.PlatformID, dateadd(YEAR, (" + txtYear.Text + " - YEAR(SYSDATETIMEOFFSET())), SYSDATETIMEOFFSET())" +
                                             "FROM SourceCTE S" +
                                             $"   INNER JOIN Sega.Platform P ON P.[Name] LIKE(N'%{pName}%');";
                                     }
                                     else
                                     {
-                                        qBuild += "UPDATE Sega.GamePlatform SET Rating = " + txtRating +
-                                            $"FROM SourceCTE S INNER JOIN Sega.Platform P ON P.[Name] LIKE(N'%{pName}%')" +
-                                            "WHERE GameID = S.GameID AND PlatformID = P.PlatformID;";
+                                        qBuild += "INSERT Sega.GamePlatform(GameID, PlatformID, ReleaseDate)" +
+                                            "SELECT S.GameID, P.PlatformID, dateadd(YEAR, (" + txtYear.Text + " - YEAR(SYSDATETIMEOFFSET())), SYSDATETIMEOFFSET())" +
+                                            "FROM SourceCTE S" +
+                                            $"   INNER JOIN Sega.Platform P ON P.[Name] LIKE(N'%{pName}%');";
                                     }
                                 }
                             }
                         }
-                        else if ((txtPlatform.Text != null && !txtPlatform.Text.Trim().Equals("")) && (txtRating.Text != null && !txtRating.Text.Trim().Equals("")))
+                        else if (txtPlatform.Text != "")
                         {
                             string pName = txtPlatform.Text.Trim();
                             sqlDa = new SqlDataAdapter(query + "SELECT *" +
@@ -332,29 +352,23 @@ namespace SegaSearch
                                 if (sqlDa.Fill(dtbl) == 0)
                                 {
                                     qBuild += $"INSERT Sega.Platform([Name], Manufacturer) VALUES(N'%{pName}%', N'Unknown(user input)');" +
-                                        "INSERT Sega.GamePlatform(GameID, PlatformID, ReleaseDate, Rating)" +
-                                        "SELECT S.GameID, P.PlatformID, dateadd(YEAR, (" + txtYear.Text + " - YEAR(SYSDATETIMEOFFSET())), SYSDATETIMEOFFSET()), " + txtRating.Text +
-                                        "FROM SourceCTE S" +
-                                        $"   INNER JOIN Sega.Platform P ON P.[Name] LIKE(N'%{pName}%');";
+                                        "INSERT Sega.GamePlatform(GameID, PlatformID, ReleaseDate)" +
+                                            "SELECT S.GameID, P.PlatformID, dateadd(YEAR, (" + txtYear.Text + " - YEAR(SYSDATETIMEOFFSET())), SYSDATETIMEOFFSET())" +
+                                            "FROM SourceCTE S" +
+                                            $"   INNER JOIN Sega.Platform P ON P.[Name] LIKE(N'%{pName}%');";
                                 }
                                 else
                                 {
-                                    qBuild += "UPDATE Sega.GamePlatform SET Rating = " + txtRating +
-                                        $"FROM SourceCTE S INNER JOIN Sega.Platform P ON P.[Name] LIKE(N'%{pName}%')" +
-                                        "WHERE GameID = S.GameID AND PlatformID = P.PlatformID;";
+                                    qBuild += "INSERT Sega.GamePlatform(GameID, PlatformID, ReleaseDate)" +
+                                            "SELECT S.GameID, P.PlatformID, dateadd(YEAR, (" + txtYear.Text + " - YEAR(SYSDATETIMEOFFSET())), SYSDATETIMEOFFSET())" +
+                                            "FROM SourceCTE S" +
+                                            $"   INNER JOIN Sega.Platform P ON P.[Name] LIKE(N'%{pName}%');";
                                 }
                             }
                         }
-                        else if((txtPlatform.Text != null && !txtPlatform.Text.Trim().Equals("")))
-                        {
-                            MessageBox.Show("A new platform was attempted to be added to an existing game\n" +
-                                "If adding a new platform to an existing game, a rating is needed\n" +
-                                "Platform(s) not added or modified\n" +
-                                "Querying remaining fields");
-                        }
                         #endregion
                         #region DevTeamAdd/ModifyQuery
-                        if (txtDevelopmentTeam.Text.Split(',') != null && txtDevelopmentTeam.Text.Split(',').Count() >= 1)
+                        if (txtDevelopmentTeam.Text.Split(',') != null)
                         {
                             foreach (string s in txtDevelopmentTeam.Text.Split(','))
                             {
@@ -389,7 +403,7 @@ namespace SegaSearch
                                 }
                             }
                         }
-                        else if (txtDevelopmentTeam.Text != null && !txtDevelopmentTeam.Text.Trim().Equals(""))
+                        else if (txtDevelopmentTeam.Text != "")
                         {
                             string dName = txtDevelopmentTeam.Text.Trim();
                             sqlDa = new SqlDataAdapter(query + "SELECT *" +
@@ -422,17 +436,17 @@ namespace SegaSearch
                             }
                         }
                         #endregion
-                        if (txtCopiesSold.Text != null && !txtCopiesSold.Text.Trim().Equals(""))
+                        if (txtCopiesSold.Text != "")
                         {
-                            qBuild += "UPDATE Sega.Game" + "SET    QuantitySold = " + txtCopiesSold.Text + "FROM SourceCTE S" +
-                                "WHERE GameID = S.GameID AND QuantitySold <> " + txtCopiesSold.Text + ";";
+                            qBuild += "UPDATE Sega.GamePlatform" + "SET    QuantitySold = " + txtCopiesSold.Text + "FROM SourceCTE S" +
+                                "WHERE GameID = S.GameID AND PlatformID = S.PlatformID;";
                         }
-                        if (txtRating.Text != null && !txtRating.Text.Trim().Equals(""))
+                        if (txtRating.Text != "")
                         {
                             qBuild += "UPDATE Sega.GamePlatform" + "SET    Rating = " + txtRating.Text + "FROM SourceCTE S" +
-                            "WHERE GameID = S.GameID AND RATING <> " + txtRating.Text + ";";
+                            "WHERE GameID = S.GameID AND PlatformID = S.PlatformID;";
                         }
-                        if (txtFranchise.Text != null && !txtFranchise.Text.Trim().Equals(""))
+                        if (txtFranchise.Text != "")
                         {
                             qBuild += "UPDATE Sega.Franchise" + $"SET    [Name] = N'%{txtFranchise.Text}%' FROM SourceCTE S" +
                             $"WHERE FranchiseID = S.FranchiseID AND [Name] NOT LIKE(N'%{txtFranchise.Text}%')" + ";";
@@ -455,9 +469,9 @@ namespace SegaSearch
                     else
                     {
                         //Check for input in all boxes, since adding a new game
-                        if ((txtRating.Text != null && !txtRating.Text.Trim().Equals("")) && (txtCopiesSold.Text != null && !txtCopiesSold.Text.Trim().Equals(""))
-                            && (txtFranchise.Text != null && !txtFranchise.Text.Trim().Equals("")) && (txtGenre.Text != null && !txtGenre.Text.Trim().Equals(""))
-                            && (txtPlatform.Text != null && !txtPlatform.Text.Trim().Equals("")) && (txtDevelopmentTeam.Text != null && !txtDevelopmentTeam.Text.Trim().Equals("")))
+                        if ((txtRating.Text != "") && (txtCopiesSold.Text != "")
+                            && (txtFranchise.Text != "") && (txtGenre.Text != "")
+                            && (txtPlatform.Text != "") && (txtDevelopmentTeam.Text !=""))
                         {
                             query = "WITH CheckFranchise(FranchiseID, [Name]) AS" +
                                 $"(SELECT F.FranchiseID, F.[Name]    FROM Sega.Franchise F   WHERE F.[Name] LIKE(N'%{txtFranchise.Text}%'))";
@@ -466,8 +480,8 @@ namespace SegaSearch
                             if (sqlDa.Fill(dtbl) > 0) //if the franchise exists
                             {
                                 //adding the game to the table
-                                qBuild = query + "INSERT Sega.Game(FranchiseID, [Name], QuantitySold)" +
-                                    $"SELECT CF.FranchiseID, N'%{txtName.Text}%', " + txtCopiesSold.Text +
+                                qBuild = query + "INSERT Sega.Game(FranchiseID, [Name])" +
+                                    $"SELECT CF.FranchiseID, N'%{txtName.Text}%'" +
                                     "FROM CheckFranchise CF;";
                                 qBuild += $"WITH GetGameID(GameID) AS (SELECT G.GameID   FROM Sega.Game G   WHERE G.[Name] LIKE(N'%{txtName.Text}%'))";
                             }
@@ -478,13 +492,13 @@ namespace SegaSearch
                                     "(" +
                                     $"SELECT F.FranchiseID   FROM Sega.Franchise F   WHERE F.[Name] LIKE('%{txtFranchise.Text}%')" +
                                     ")";
-                                qBuild += "INSERT Sega.Game(FranchiseID, [Name], QuantitySold)" +       //adding game, includes copies sold
-                                    $"SELECT GF.FranchiseID, N'%{txtName.Text}%', N'%{txtCopiesSold.Text}%' FROM GetFranchiseID GF;";
+                                qBuild += "INSERT Sega.Game(FranchiseID, [Name])" +       //adding game, includes copies sold
+                                    $"SELECT GF.FranchiseID, N'%{txtName.Text}%' FROM GetFranchiseID GF;";
                                 qBuild += $"WITH GetGameID(GameID) AS (SELECT G.GameID   FROM Sega.Game G   WHERE G.[Name] LIKE(N'%{txtName.Text}%'))"; //CLE to get GameID
                             }
                             //adding to gamePlatform
                             #region AddGamePlatform
-                            if (txtPlatform.Text.Split(',') != null && txtPlatform.Text.Split(',').Count() >= 1)
+                            if (txtPlatform.Text.Split(',') != null)
                             {
                                 foreach (string s in txtPlatform.Text.Split(','))
                                 {
@@ -495,15 +509,15 @@ namespace SegaSearch
                                     if (sqlDa.Fill(dtbl) == 0)
                                     {
                                         qBuild += $"INSERT Sega.Platform([Name], Manufacturer) VALUES(N'%{pName}%', N'Unknown(user input)');" +
-                                        "INSERT Sega.GamePlatform(GameID, PlatformID, ReleaseDate, Rating)" +
-                                        "SELECT G.GameID, P.PlatformID, dateadd(YEAR, (" + txtYear.Text + " - YEAR(SYSDATETIMEOFFSET())), SYSDATETIMEOFFSET()), " + txtRating.Text +
+                                        "INSERT Sega.GamePlatform(GameID, PlatformID, ReleaseDate, Rating, QuantitySold)" +
+                                        "SELECT G.GameID, P.PlatformID, dateadd(YEAR, (" + txtYear.Text + " - YEAR(SYSDATETIMEOFFSET())), SYSDATETIMEOFFSET()), " + txtRating.Text + ", " + txtCopiesSold +
                                         "FROM GetGameID G" +
                                         $"   INNER JOIN Sega.Platform P ON P.[Name] LIKE(N'%{pName}%');";
                                     }
                                     else
                                     {
-                                        qBuild += "INSERT Sega.GamePlatform(GameID, PlatformID, ReleaseDate, Rating)" +
-                                            "SELECT G.GameID, P.PlatformID, dateadd(YEAR, (" + txtYear.Text + " - YEAR(SYSDATETIMEOFFSET())), SYSDATETIMEOFFSET()), " + txtRating.Text +
+                                        qBuild += "INSERT Sega.GamePlatform(GameID, PlatformID, ReleaseDate, Rating, QuantitySold)" +
+                                            "SELECT G.GameID, P.PlatformID, dateadd(YEAR, (" + txtYear.Text + " - YEAR(SYSDATETIMEOFFSET())), SYSDATETIMEOFFSET()), " + txtRating.Text + ", " + txtCopiesSold +
                                             "FROM GetGameID G" +
                                             $"   INNER JOIN Sega.Platform P ON P.[Name] LIKE(N'%{pName}%');";
                                     }
@@ -518,15 +532,15 @@ namespace SegaSearch
                                 if (sqlDa.Fill(dtbl) == 0)
                                 {
                                     qBuild += $"INSERT Sega.Platform([Name], Manufacturer) VALUES(N'%{pName}%', N'Unknown(user input)');" +
-                                    "INSERT Sega.GamePlatform(GameID, PlatformID, ReleaseDate, Rating)" +
-                                    "SELECT G.GameID, P.PlatformID, dateadd(YEAR, (" + txtYear.Text + " - YEAR(SYSDATETIMEOFFSET())), SYSDATETIMEOFFSET()), " + txtRating.Text +
+                                    "INSERT Sega.GamePlatform(GameID, PlatformID, ReleaseDate, Rating, QuantitySold)" +
+                                    "SELECT G.GameID, P.PlatformID, dateadd(YEAR, (" + txtYear.Text + " - YEAR(SYSDATETIMEOFFSET())), SYSDATETIMEOFFSET()), " + txtRating.Text + ", " + txtCopiesSold +
                                     "FROM GetGameID G" +
                                     $"   INNER JOIN Sega.Platform P ON P.[Name] LIKE(N'%{pName}%');";
                                 }
                                 else
                                 {
-                                    qBuild += "INSERT Sega.GamePlatform(GameID, PlatformID, ReleaseDate, Rating)" +
-                                        "SELECT G.GameID, P.PlatformID, dateadd(YEAR, (" + txtYear.Text + " - YEAR(SYSDATETIMEOFFSET())), SYSDATETIMEOFFSET()), " + txtRating.Text +
+                                    qBuild += "INSERT Sega.GamePlatform(GameID, PlatformID, ReleaseDate, Rating, QuantitySold)" +
+                                        "SELECT G.GameID, P.PlatformID, dateadd(YEAR, (" + txtYear.Text + " - YEAR(SYSDATETIMEOFFSET())), SYSDATETIMEOFFSET()), " + txtRating.Text + ", " + txtCopiesSold +
                                         "FROM GetGameID G" +
                                         $"   INNER JOIN Sega.Platform P ON P.[Name] LIKE(N'%{pName}%');";
                                 }
@@ -534,7 +548,7 @@ namespace SegaSearch
                             #endregion
                             //Add to GameGenre
                             #region AddGameGenre
-                            if (txtGenre.Text.Split(',') != null && txtGenre.Text.Split(',').Count() >= 1)
+                            if (txtGenre.Text.Split(',') != null)
                             {
                                 foreach (string s in txtGenre.Text.Split(','))
                                 {
@@ -584,7 +598,7 @@ namespace SegaSearch
                             #endregion
                             //Add to GameTeam
                             #region AddGameTeam
-                            if (txtDevelopmentTeam.Text.Split(',') != null && txtDevelopmentTeam.Text.Split(',').Count() >= 1)
+                            if (txtDevelopmentTeam.Text.Split(',') != null)
                             {
                                 foreach (string s in txtDevelopmentTeam.Text.Split(','))
                                 {
@@ -648,12 +662,9 @@ namespace SegaSearch
                         //Invalid input, meaning, empty box
                         else
                         {
-                            MessageBox.Show("Error: see grid for details");
-                            TextBox invalid = new TextBox();
-                            invalid.Text = "Must input all information when adding a game not in the list, excluding Character(s) for older versions, game not added";
-                            invalid.ForeColor = Color.Red;
-                            invalid.BackColor = Color.White;
-                            grdResults.DataSource = invalid;
+                            MessageBox.Show("Error: Must input all information when adding a game not in the list\n" +
+                                "Game not added\n" +
+                                "If RATING and QUANTITY SOLD are unknown, input 0");
                         }
                     }
                     #endregion
@@ -662,14 +673,56 @@ namespace SegaSearch
             #region MissingNameOrYear
             else
             {
-                MessageBox.Show("Error: see grid for details");
-                TextBox invalid = new TextBox();
-                invalid.Text = "Must input NAME and RELEASE YEAR to modify a game, otherwise fill all information to add a game, ignore Character(s)";
-                invalid.ForeColor = Color.Red;
-                invalid.BackColor = Color.White;
-                grdResults.DataSource = invalid;
+                MessageBox.Show("Error: Must input NAME and RELEASE YEAR\n" +
+                    "To, at the least, modify a game\n" +
+                    "Otherwise fill all information to add a game");
             }
             #endregion
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            String query;
+
+            String name = txtName.Text;
+
+            query = "delete " +
+                    "from Sega.GamePlatform " +
+                    "where GameId in " +
+                    "( " +
+                        "select G.GameID " +
+                        "from  Sega.Game G " +
+                        $"where G.Name = '{name}' " +
+                    ") " +
+                    "delete " +
+                    "from Sega.GameGenre " +
+                    "where GameId in " +
+                    "( " +
+                        "select G.GameID " +
+                        "from  Sega.Game G " +
+                        $"where G.Name = '{name}' " +
+                    ") " +
+                    "delete " +
+                    "from Sega.GameTeam " +
+                    "where GameId in " +
+                    "( " +
+                        "select G.GameID " +
+                        "from  Sega.Game G " +
+                        $"where G.Name = '{name}' " +
+                    ") " +
+
+                    "delete from Sega.Game " +
+                    $"where Name = '{name}' ";
+
+
+            using (SqlConnection sqlCon = new SqlConnection(connetionString))
+            {
+                sqlCon.Open();
+                SqlDataAdapter sqlDa = new SqlDataAdapter(query, sqlCon);
+                DataTable dtbl = new DataTable();
+                sqlDa.Fill(dtbl);
+                MessageBox.Show("Deleted");
+            }
         }
     }
 }
