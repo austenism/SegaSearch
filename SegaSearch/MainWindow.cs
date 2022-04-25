@@ -664,12 +664,9 @@ namespace SegaSearch
                         //Invalid input, meaning, empty box
                         else
                         {
-                            MessageBox.Show("Error: see grid for details");
-                            TextBox invalid = new TextBox();
-                            invalid.Text = "Must input all information when adding a game not in the list, game not added, if RATING and QUANTITY SOLD are unknown, input 0, ignore Character(s) for older versions";
-                            invalid.ForeColor = Color.Red;
-                            invalid.BackColor = Color.White;
-                            grdResults.DataSource = invalid;
+                            MessageBox.Show("Error: Must input all information when adding a game not in the list\n" +
+                                "Game not added\n" +
+                                "If RATING and QUANTITY SOLD are unknown, input 0");
                         }
                     }
                     #endregion
@@ -678,12 +675,9 @@ namespace SegaSearch
             #region MissingNameOrYear
             else
             {
-                MessageBox.Show("Error: see grid for details");
-                TextBox invalid = new TextBox();
-                invalid.Text = "Must input NAME and RELEASE YEAR, at the least to modify a game, otherwise fill all information to add a game, ignore Character(s)";
-                invalid.ForeColor = Color.Red;
-                invalid.BackColor = Color.White;
-                grdResults.DataSource = invalid;
+                MessageBox.Show("Error: Must input NAME and RELEASE YEAR\n" +
+                    "To, at the least, modify a game\n" +
+                    "Otherwise fill all information to add a game");
             }
             #endregion
         }
