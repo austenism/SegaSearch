@@ -29,8 +29,6 @@ namespace SegaSearch
                     User ID=austenism;
                     Password=joelsuxlol42069";
             //cis560_team19
-            //txtCharacters.Enabled = false;
-            //txtCharacters.Text = "Update to new version to add characters...";
         }
 
 
@@ -206,7 +204,7 @@ namespace SegaSearch
 
         private void AddButton_Click(object sender, EventArgs e)
         {
-            if ((txtName.Text != null && txtName.Text.Trim().Equals("")) && (txtYear.Text != null && txtYear.Text.Trim().Equals("")))
+            if ((txtName.Text != "") && (txtYear.Text != ""))
             {
                 using (SqlConnection sqlCon = new SqlConnection(connetionString))
                 {

@@ -104,7 +104,7 @@
             this.AddButton.Location = new System.Drawing.Point(6, 643);
             this.AddButton.Name = "AddButton";
             this.AddButton.Size = new System.Drawing.Size(107, 29);
-            this.AddButton.TabIndex = 19;
+            this.AddButton.TabIndex = 8;
             this.AddButton.Text = "Add/Modify";
             this.AddButton.UseVisualStyleBackColor = true;
             this.AddButton.Click += new System.EventHandler(this.AddButton_Click);
@@ -123,7 +123,7 @@
             this.txtCopiesSold.Location = new System.Drawing.Point(6, 221);
             this.txtCopiesSold.Name = "txtCopiesSold";
             this.txtCopiesSold.Size = new System.Drawing.Size(279, 27);
-            this.txtCopiesSold.TabIndex = 18;
+            this.txtCopiesSold.TabIndex = 3;
             // 
             // label10
             // 
@@ -139,7 +139,7 @@
             this.txtRating.Location = new System.Drawing.Point(6, 169);
             this.txtRating.Name = "txtRating";
             this.txtRating.Size = new System.Drawing.Size(279, 27);
-            this.txtRating.TabIndex = 16;
+            this.txtRating.TabIndex = 2;
             // 
             // label9
             // 
@@ -155,7 +155,7 @@
             this.txtYear.Location = new System.Drawing.Point(6, 116);
             this.txtYear.Name = "txtYear";
             this.txtYear.Size = new System.Drawing.Size(279, 27);
-            this.txtYear.TabIndex = 14;
+            this.txtYear.TabIndex = 1;
             // 
             // label8
             // 
@@ -171,7 +171,7 @@
             this.txtDevelopmentTeam.Location = new System.Drawing.Point(6, 463);
             this.txtDevelopmentTeam.Name = "txtDevelopmentTeam";
             this.txtDevelopmentTeam.Size = new System.Drawing.Size(279, 27);
-            this.txtDevelopmentTeam.TabIndex = 12;
+            this.txtDevelopmentTeam.TabIndex = 7;
             // 
             // label7
             // 
@@ -186,7 +186,7 @@
             this.txtPlatform.Location = new System.Drawing.Point(6, 381);
             this.txtPlatform.Name = "txtPlatform";
             this.txtPlatform.Size = new System.Drawing.Size(279, 27);
-            this.txtPlatform.TabIndex = 10;
+            this.txtPlatform.TabIndex = 6;
             // 
             // label6
             // 
@@ -202,7 +202,7 @@
             this.txtGenre.Location = new System.Drawing.Point(6, 328);
             this.txtGenre.Name = "txtGenre";
             this.txtGenre.Size = new System.Drawing.Size(279, 27);
-            this.txtGenre.TabIndex = 6;
+            this.txtGenre.TabIndex = 5;
             // 
             // label4
             // 
@@ -234,7 +234,7 @@
             this.txtName.Location = new System.Drawing.Point(6, 63);
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(279, 27);
-            this.txtName.TabIndex = 2;
+            this.txtName.TabIndex = 0;
             // 
             // label2
             // 
@@ -276,7 +276,7 @@
             this.btnFranchise.Location = new System.Drawing.Point(6, 176);
             this.btnFranchise.Name = "btnFranchise";
             this.btnFranchise.Size = new System.Drawing.Size(91, 24);
-            this.btnFranchise.TabIndex = 15;
+            this.btnFranchise.TabIndex = 14;
             this.btnFranchise.TabStop = true;
             this.btnFranchise.Text = "Franchise";
             this.btnFranchise.UseVisualStyleBackColor = true;
@@ -287,7 +287,7 @@
             this.btnManufacturer.Location = new System.Drawing.Point(6, 146);
             this.btnManufacturer.Name = "btnManufacturer";
             this.btnManufacturer.Size = new System.Drawing.Size(118, 24);
-            this.btnManufacturer.TabIndex = 14;
+            this.btnManufacturer.TabIndex = 13;
             this.btnManufacturer.TabStop = true;
             this.btnManufacturer.Text = "Manufacturer";
             this.btnManufacturer.UseVisualStyleBackColor = true;
@@ -298,7 +298,7 @@
             this.btnPlatform.Location = new System.Drawing.Point(6, 116);
             this.btnPlatform.Name = "btnPlatform";
             this.btnPlatform.Size = new System.Drawing.Size(87, 24);
-            this.btnPlatform.TabIndex = 13;
+            this.btnPlatform.TabIndex = 12;
             this.btnPlatform.TabStop = true;
             this.btnPlatform.Text = "Platform";
             this.btnPlatform.UseVisualStyleBackColor = true;
@@ -309,7 +309,7 @@
             this.btnTeam.Location = new System.Drawing.Point(6, 86);
             this.btnTeam.Name = "btnTeam";
             this.btnTeam.Size = new System.Drawing.Size(160, 24);
-            this.btnTeam.TabIndex = 12;
+            this.btnTeam.TabIndex = 11;
             this.btnTeam.TabStop = true;
             this.btnTeam.Text = "Development Team";
             this.btnTeam.UseVisualStyleBackColor = true;
@@ -320,7 +320,7 @@
             this.btnGenre.Location = new System.Drawing.Point(6, 56);
             this.btnGenre.Name = "btnGenre";
             this.btnGenre.Size = new System.Drawing.Size(69, 24);
-            this.btnGenre.TabIndex = 1;
+            this.btnGenre.TabIndex = 10;
             this.btnGenre.TabStop = true;
             this.btnGenre.Text = "Genre";
             this.btnGenre.UseVisualStyleBackColor = true;
@@ -331,7 +331,7 @@
             this.btnGame.Location = new System.Drawing.Point(6, 26);
             this.btnGame.Name = "btnGame";
             this.btnGame.Size = new System.Drawing.Size(69, 24);
-            this.btnGame.TabIndex = 0;
+            this.btnGame.TabIndex = 9;
             this.btnGame.TabStop = true;
             this.btnGame.Text = "Game";
             this.btnGame.UseVisualStyleBackColor = true;
@@ -341,7 +341,7 @@
             this.txtSearch.Location = new System.Drawing.Point(6, 118);
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.Size = new System.Drawing.Size(269, 27);
-            this.txtSearch.TabIndex = 11;
+            this.txtSearch.TabIndex = 17;
             // 
             // RangeChoices
             // 
@@ -381,14 +381,14 @@
             this.txtTo.Location = new System.Drawing.Point(96, 59);
             this.txtTo.Name = "txtTo";
             this.txtTo.Size = new System.Drawing.Size(125, 27);
-            this.txtTo.TabIndex = 14;
+            this.txtTo.TabIndex = 16;
             // 
             // txtFrom
             // 
             this.txtFrom.Location = new System.Drawing.Point(96, 26);
             this.txtFrom.Name = "txtFrom";
             this.txtFrom.Size = new System.Drawing.Size(125, 27);
-            this.txtFrom.TabIndex = 13;
+            this.txtFrom.TabIndex = 15;
             // 
             // label11
             // 
