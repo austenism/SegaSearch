@@ -288,7 +288,7 @@ namespace SegaSearch
                                     qBuild += $"INSERT Sega.Genre([Name]) VALUES(N'{gName}'); " +
                                         "INSERT Sega.GameGenre(GameID, GenreID) " +
                                         "SELECT S.GameID, G.GenreID " +
-                                        " FROM SourceCTE S " +
+                                        " FROM SourceCTE  S  " +
                                         $"   INNER JOIN Sega.Genre G ON G.[Name] LIKE(N'{gName}'); ";
                                 }
                                 else
