@@ -210,10 +210,11 @@ namespace SegaSearch
                 {
                     sqlCon.Open();
 
-                    SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT G.[Name], GP.ReleaseDate" +
-                        "FROM Sega.Game G" +
-                        "   INNER JOIN Sega.GamePlateform GP ON GP.GameID = G.GameID" +
-                        $"WHERE G.[Name] LIKE(N'%{txtName.Text}%')" + " AND YEAR(GP.ReleaseDate) = " + txtYear.Text + ";", sqlCon);
+                    SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT *" +
+                        "FROM Sega.GamePlatform GP" +
+                        "   INNER JOIN Sega.Game G ON G.GameID = GP.GameID" +
+                        $"WHERE YEAR(GP.ReleaseDate) = '{txtYear.Text}' " +
+                        $"AND G.Name LIKE('{txtName.Text}')", sqlCon);
                     DataTable dtbl = new DataTable();
                     string query;
                     string qBuild;
