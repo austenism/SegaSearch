@@ -417,6 +417,7 @@ namespace SegaSearch
                                     "FROM Sega.GameTeam GT " +
                                     "   INNER JOIN SourceCTE S ON S.GameID = GT.GameID " +
                                     "   INNER JOIN Sega.DevelopmentTeam T ON T.TeamID = GT.TeamID " +
+                                    "Inner Join Sega.Game G on G.GameID = GT.GameID " +
                                     $"WHERE G.[Name] LIKE(N'{dName}'); ", sqlCon);
                             dtbl = new DataTable();
                             if (sqlDa.Fill(dtbl) == 0)
