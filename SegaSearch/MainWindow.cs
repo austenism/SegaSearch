@@ -227,7 +227,7 @@ namespace SegaSearch
                             " (SELECT G.GameID, G.FranchiseID, GP.ReleaseDate, GP.PlatformID " +
                             "FROM Sega.Game G " +
                             "   INNER JOIN Sega.GamePlatform GP ON GP.GameID = G.GameID " +
-                            $"WHERE G.[Name] LIKE(N'%{txtName.Text}%') " +
+                            $"WHERE G.[Name] LIKE(N'{txtName.Text}') " +
                             $"AND YEAR(GP.ReleaseDate) = '{txtYear.Text}') ";
                         qBuild = query;
                         string[] textSplit = txtGenre.Text.Split(',');
@@ -417,8 +417,7 @@ namespace SegaSearch
                                     "FROM Sega.GameTeam GT " +
                                     "   INNER JOIN SourceCTE S ON S.GameID = GT.GameID " +
                                     "   INNER JOIN Sega.DevelopmentTeam T ON T.TeamID = GT.TeamID " +
-                                    "Inner Join Sega.Game G on G.GameID = GT.GameID " +
-                                    $"WHERE G.[Name] LIKE(N'{dName}'); ", sqlCon);
+                                    $"WHERE T.[Name] LIKE(N'{dName}'); ", sqlCon);
                             dtbl = new DataTable();
                             if (sqlDa.Fill(dtbl) == 0)
                             {
@@ -428,10 +427,10 @@ namespace SegaSearch
                                 dtbl = new DataTable();
                                 if (sqlDa.Fill(dtbl) == 0)
                                 {
-                                    qBuild += $"INSERT Sega.DevelopmentTeam([Name]) VALUES(N'%{dName}%'); " +
-                                        "INSERT Sega.GameTeam(GameID, TeamID) " +
-                                        "SELECT S.GameID, T.TeamID " +
-                                        "FROM SourceCTE S " +
+                                    qBuild += $" INSERT Sega.DevelopmentTeam([Name]) VALUES(N'{dName}'); " +
+                                        " INSERT Sega.GameTeam(GameID, TeamID) " +
+                                        " SELECT S.GameID, T.TeamID " +
+                                        " FROM SourceCTE S " +
                                         $"   INNER JOIN Sega.DevelopmentTeam T ON T.[Name] LIKE(N'{dName}'); ";
                                 }
                                 else
