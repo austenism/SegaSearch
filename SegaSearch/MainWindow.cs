@@ -552,15 +552,15 @@ namespace SegaSearch
                                     {
                                         qBuild += $"INSERT Sega.Platform([Name], Manufacturer) VALUES(N'%{pName}%', N'Unknown(user input)'); " +
                                         "INSERT Sega.GamePlatform(GameID, PlatformID, ReleaseDate, Rating, QuantitySold) " +
-                                        "SELECT G.GameID, P.PlatformID, dateadd(YEAR, (" + txtYear.Text + " - YEAR(SYSDATETIMEOFFSET())), SYSDATETIMEOFFSET()), " + txtRating.Text + ", " + txtCopiesSold +
-                                        "FROM GetGameID G " +
+                                        "SELECT G.GameID, P.PlatformID, dateadd(YEAR, (" + txtYear.Text + " - YEAR(SYSDATETIMEOFFSET())), SYSDATETIMEOFFSET()), " + txtRating.Text + ", " + txtCopiesSold.Text +
+                                        " FROM GetGameID G " +
                                         $"   INNER JOIN Sega.Platform P ON P.[Name] LIKE(N'%{pName}%'); ";
                                     }
                                     else
                                     {
                                         qBuild += "INSERT Sega.GamePlatform(GameID, PlatformID, ReleaseDate, Rating, QuantitySold) " +
-                                            "SELECT G.GameID, P.PlatformID, dateadd(YEAR, (" + txtYear.Text + " - YEAR(SYSDATETIMEOFFSET())), SYSDATETIMEOFFSET()), " + txtRating.Text + ", " + txtCopiesSold +
-                                            "FROM GetGameID G " +
+                                            "SELECT G.GameID, P.PlatformID, dateadd(YEAR, (" + txtYear.Text + " - YEAR(SYSDATETIMEOFFSET())), SYSDATETIMEOFFSET()), " + txtRating.Text + ", " + txtCopiesSold.Text +
+                                            " FROM GetGameID G " +
                                             $"   INNER JOIN Sega.Platform P ON P.[Name] LIKE(N'%{pName}%'); ";
                                     }
                                 }
