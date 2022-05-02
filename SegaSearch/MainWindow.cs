@@ -206,7 +206,7 @@ namespace SegaSearch
 
                 if (GamePlatformCount == 1) //we want to modify
                 {
-                    
+                    MessageBox.Show("Game Already Exists");
                 }
 
                 else if (GamePlatformCount == 0) //game does not exist so add
