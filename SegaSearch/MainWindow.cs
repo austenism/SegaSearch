@@ -206,45 +206,11 @@ namespace SegaSearch
 
                 if (GamePlatformCount == 1) //we want to modify
                 {
-                    String query;
-
-                    String name = txtName.Text;
-
-                    query = "delete " +
-                            "from Sega.GamePlatform " +
-                            "where GameId in " +
-                            "( " +
-                                "select G.GameID " +
-                                "from  Sega.Game G " +
-                                $"where G.Name = '{name}' " +
-                            ") " +
-                            "delete " +
-                            "from Sega.GameGenre " +
-                            "where GameId in " +
-                            "( " +
-                                "select G.GameID " +
-                                "from  Sega.Game G " +
-                                $"where G.Name = '{name}' " +
-                            ") " +
-                            "delete " +
-                            "from Sega.GameTeam " +
-                            "where GameId in " +
-                            "( " +
-                                "select G.GameID " +
-                                "from  Sega.Game G " +
-                                $"where G.Name = '{name}' " +
-                            ") " +
-
-                            "delete from Sega.Game " +
-                            $"where Name = '{name}' ";
-
-
-
-                    grdResults.DataSource = HelperMethods.RunQuery(query);
+                    
                 }
 
-                //else if (GamePlatformCount == 0) //game does not exist so add
-                //{
+                else if (GamePlatformCount == 0) //game does not exist so add
+                {
                 #region AddGame
                 //lets check and see if all the parts needed exist. If they do not, add them
                     if (txtFranchise.Text != "")
@@ -310,7 +276,7 @@ namespace SegaSearch
 
                     MessageBox.Show("Game Added");
                     #endregion
-                //}
+                }
 
                 //else //more than one was returned, which shouldnt happen
                 //{
