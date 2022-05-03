@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.btnDelete = new System.Windows.Forms.Button();
             this.AddButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -75,6 +76,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.btnDelete);
             this.groupBox1.Controls.Add(this.AddButton);
             this.groupBox1.Controls.Add(this.label1);
@@ -96,14 +98,24 @@
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Location = new System.Drawing.Point(11, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(291, 683);
+            this.groupBox1.Size = new System.Drawing.Size(291, 707);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Add or Modify Games on the List";
             // 
+            // label5
+            // 
+            this.label5.ForeColor = System.Drawing.Color.Red;
+            this.label5.Location = new System.Drawing.Point(6, 594);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(279, 72);
+            this.label5.TabIndex = 19;
+            this.label5.Text = "When doing Genres and Development Teams, you MUST NOT use spaces after the commas" +
+    ". Ex: Action,Platform,Driving";
+            // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(185, 643);
+            this.btnDelete.Location = new System.Drawing.Point(191, 669);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(94, 29);
             this.btnDelete.TabIndex = 18;
@@ -113,7 +125,7 @@
             // 
             // AddButton
             // 
-            this.AddButton.Location = new System.Drawing.Point(6, 643);
+            this.AddButton.Location = new System.Drawing.Point(6, 669);
             this.AddButton.Name = "AddButton";
             this.AddButton.Size = new System.Drawing.Size(107, 29);
             this.AddButton.TabIndex = 8;
@@ -125,10 +137,10 @@
             // 
             this.label1.Location = new System.Drawing.Point(6, 493);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(279, 88);
+            this.label1.Size = new System.Drawing.Size(279, 101);
             this.label1.TabIndex = 0;
-            this.label1.Text = "If a game\'s Name and Release Year match with one on the database, the game will b" +
-    "e treated as the same game and update it accordingly";
+            this.label1.Text = "You must  enter at least Name and Platform for any changes to be made. When enter" +
+    "ing a game with multiple platforms, they must be entered one at a time";
             // 
             // txtCopiesSold
             // 
@@ -205,9 +217,9 @@
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(6, 358);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(246, 20);
+            this.label6.Size = new System.Drawing.Size(173, 20);
             this.label6.TabIndex = 9;
-            this.label6.Text = "Platform(s) - Separated By Commas";
+            this.label6.Text = "Platform (One at a Time)";
             // 
             // txtGenre
             // 
@@ -264,7 +276,7 @@
             this.grdResults.Name = "grdResults";
             this.grdResults.RowHeadersWidth = 51;
             this.grdResults.RowTemplate.Height = 29;
-            this.grdResults.Size = new System.Drawing.Size(883, 675);
+            this.grdResults.Size = new System.Drawing.Size(883, 699);
             this.grdResults.TabIndex = 2;
             // 
             // GroupByChoices
@@ -413,7 +425,7 @@
             // 
             // btnQuery
             // 
-            this.btnQuery.Location = new System.Drawing.Point(6, 643);
+            this.btnQuery.Location = new System.Drawing.Point(6, 669);
             this.btnQuery.Name = "btnQuery";
             this.btnQuery.Size = new System.Drawing.Size(94, 29);
             this.btnQuery.TabIndex = 10;
@@ -428,7 +440,7 @@
             this.groupBox2.Controls.Add(this.GroupByChoices);
             this.groupBox2.Location = new System.Drawing.Point(309, 12);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(293, 683);
+            this.groupBox2.Size = new System.Drawing.Size(293, 707);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Query List of Games";
@@ -437,7 +449,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1502, 704);
+            this.ClientSize = new System.Drawing.Size(1502, 725);
             this.Controls.Add(this.grdResults);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -496,5 +508,6 @@
         private TextBox txtTo;
         private TextBox txtFrom;
         private Button btnDelete;
+        private Label label5;
     }
 }
