@@ -313,6 +313,43 @@ namespace SegaSearch
             }
         }
 
+        public static void DeleteTables(string gameName)
+        {
+            int gameID = GetGameID(gameName);
+
+            string query =
+                "delete " +
+                "from Sega.GameTeam " +
+                $"where GameID = {gameID} ";
+            RunCommand(query);
+
+            query =
+                "delete " +
+                "from Sega.GameGenre " +
+                $"where GameID = {gameID} ";
+            RunCommand(query);
+
+        }
+        public static void UpdateTables(string gameName, string franchiseName, int year, int rating, int quantitySold)
+        {
+            int franchiseID = GetFranchiseID(franchiseName);
+            int gameID = GetGameID(gameName);
+
+            string query =
+                "update Sega.Game " +
+                $"set FranchiseID = {franchiseID} " +
+                $"where GameID = {gameID}";
+
+            RunCommand(query);
+
+            query =
+                "update Sega.GamePlatform " +
+                $"set ReleaseDate = '{year}-01-01 12:00:00.00000', Rating = {rating}, QuantitySold = {quantitySold} " +
+                $"where GameID = {gameID} ";
+
+            RunCommand(query);
+        }
+
         public static void RunCommand(string query)
         {
             using (SqlConnection sqlCon = new SqlConnection(connetionString))

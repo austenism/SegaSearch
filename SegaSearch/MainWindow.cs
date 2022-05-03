@@ -206,7 +206,67 @@ namespace SegaSearch
 
                 if (GamePlatformCount == 1) //we want to modify
                 {
-                    MessageBox.Show("Game Already Exists");
+                    #region Modify
+                    if (txtFranchise.Text != "")
+                    {
+                        if (HelperMethods.CheckForFranchise(txtFranchise.Text) == 0) //if Franchise does not exist
+                        {//add it
+                            HelperMethods.AddFranchise(txtFranchise.Text);
+                        }
+                    }
+                    if (txtGenre.Text != "")
+                    {
+                        genres = txtGenre.Text.Split(',');
+                        foreach (string g in genres)
+                        {
+                            if (HelperMethods.CheckForGenre(g) == 0) //if genre does not exist
+                            {//add it
+                                HelperMethods.AddGenre(g);
+                            }
+                        }
+                    }
+                    if (txtDevelopmentTeam.Text != "")
+                    {
+                        teams = txtDevelopmentTeam.Text.Split(',');
+                        foreach (string t in teams)
+                        {
+                            if (HelperMethods.CheckForTeam(t) == 0) //if team does not exist
+                            {//add it
+                                HelperMethods.AddTeam(t);
+                            }
+                        }
+                    }
+
+                    //this should not be true but just checkin
+                    if (HelperMethods.CheckForPlatform(txtPlatform.Text) == 0)
+                    {
+                        throw new Exception();
+                    }
+
+                    //Delete the many-to-many tables so they can be readded
+                    HelperMethods.DeleteTables(txtName.Text);
+                    //then re-add
+                    if (txtGenre.Text != "")
+                    {
+                        foreach (string s in genres)
+                        {
+                            HelperMethods.MakeGameGenre(txtName.Text, s);
+                        }
+                    }
+                    if (txtDevelopmentTeam.Text != "")
+                    {
+                        foreach (string s in teams)
+                        {
+                            HelperMethods.MakeGameTeam(txtName.Text, s);
+                        }
+                    }
+
+                    //now lets do the actual Updating cause we dont want to delete the game table entry
+                    HelperMethods.UpdateTables(txtName.Text, txtFranchise.Text, Int32.Parse(txtYear.Text), Int32.Parse(txtRating.Text), Int32.Parse(txtCopiesSold.Text));
+
+                    MessageBox.Show("Table Updated");
+
+                    #endregion
                 }
 
                 else if (GamePlatformCount == 0) //game does not exist so add
