@@ -8,4 +8,4 @@ Tables.sql - This is the table creation code
 
 Procedures.sql - This is a collection of the sql commands used within the program. This is simply for grading purposes as all queries are called from the c# code using Microsoft's SQL Adapter for C#
 
-Application - written in C#, the SegaSearch.sln and SegaSearch file are the visual studio project that this whole project runs in. This is the source Code and will need to be opened in Visual Studio.
+Application - written in C#, the SegaSearch.sln and SegaSearch file are the visual studio project that this whole project runs in. This is the source code and will need to be opened in Visual Studio.
